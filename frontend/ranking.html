@@ -213,9 +213,10 @@
         </div>`;
     }
 
-    function renderDropdownContent(preds) {
+    function renderDropdownContent(allPreds) {
+      const preds = allPreds.filter(p => p.points !== null);
       if (!preds.length) {
-        return `<div class="px-4 py-4 text-xs text-on-surface-variant text-center">Nog geen voorspellingen ingevoerd</div>`;
+        return `<div class="px-4 py-4 text-xs text-on-surface-variant text-center">Nog geen punten gescoord</div>`;
       }
 
       // Split by phase, then group-phase by subgroup
@@ -350,7 +351,7 @@
                 <div class="font-semibold text-sm text-on-surface truncate">${p.firstName} ${p.lastName}${isMe ? ' <span class="text-primary text-[10px] font-bold">(jij)</span>' : ''}</div>
                 <div class="text-xs text-on-surface-variant">
                   ${noPointsYet
-                    ? 'Klik om voorspellingen te bekijken'
+                    ? 'Wachten op eerste wedstrijd…'
                     : `${p.exactCount}× exact · ${p.settledCount} gesettled${p.bonusPoints > 0 ? ` · <span class="text-amber-600 font-semibold">+${p.bonusPoints} bonus</span>` : ''}`}
                 </div>
               </div>
