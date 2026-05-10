@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="nl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed": "#22005d",
+                "secondary-container": "#5ce9fe",
+                "error": "#ba1a1a",
+                "error-container": "#ffdad6",
+                "on-primary": "#ffffff",
+                "surface-dim": "#dadada",
+                "on-tertiary-fixed": "#410004",
+                "tertiary-fixed-dim": "#ffb3ae",
+                "surface-container-low": "#f3f3f4",
+                "on-surface-variant": "#494456",
+                "primary-fixed-dim": "#cfbcff",
+                "on-primary-container": "#cfbdff",
+                "background": "#f9f9f9",
+                "primary": "#4700b0",
+                "outline-variant": "#cbc3d9",
+                "inverse-primary": "#cfbcff",
+                "inverse-surface": "#2f3131",
+                "primary-container": "#6200eb",
+                "on-error": "#ffffff",
+                "tertiary-container": "#a80b1d",
+                "primary-fixed": "#e9ddff",
+                "on-secondary": "#ffffff",
+                "tertiary": "#7f0011",
+                "secondary": "#006874",
+                "surface-container": "#eeeeee",
+                "on-surface": "#1a1c1c",
+                "surface-container-high": "#e8e8e8",
+                "on-tertiary-container": "#ffb4af",
+                "surface": "#f9f9f9",
+                "outline": "#7b7488",
+                "surface-variant": "#e2e2e2",
+                "on-tertiary": "#ffffff",
+                "secondary-fixed": "#98f0ff",
+                "on-background": "#1a1c1c",
+                "inverse-on-surface": "#f0f1f1",
+                "on-secondary-fixed": "#001f24",
+                "surface-tint": "#6e24f6",
+                "on-secondary-fixed-variant": "#004f58",
+                "surface-container-highest": "#e2e2e2",
+                "on-error-container": "#93000a",
+                "tertiary-fixed": "#ffdad7",
+                "on-secondary-container": "#006773",
+                "surface-bright": "#f9f9f9",
+                "on-primary-fixed-variant": "#5400cc",
+                "on-tertiary-fixed-variant": "#930015",
+                "secondary-fixed-dim": "#45d8ed"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "margin-desktop": "64px",
+                "sm": "12px",
+                "md": "24px",
+                "lg": "48px",
+                "gutter": "24px",
+                "xs": "4px",
+                "margin-mobile": "16px",
+                "xl": "80px",
+                "base": "8px"
+            },
+            "fontFamily": {
+                "headline-md": ["Lexend"],
+                "body-md": ["Lexend"],
+                "headline-lg": ["Lexend"],
+                "label-lg": ["Lexend"],
+                "body-lg": ["Lexend"],
+                "label-sm": ["Lexend"],
+                "display-lg": ["Lexend"]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .wc26-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(0,0,0,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .podium-gradient-1 { background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%); }
+        .podium-gradient-2 { background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%); }
+        .podium-gradient-3 { background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32 wc26-pattern">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile h-20 w-full z-50 bg-white dark:bg-inverse-surface border-b border-outline-variant docked full-width top-0 sticky shadow-sm">
+<div class="flex items-center gap-sm">
+<div class="flex items-center justify-center bg-primary text-white w-10 h-10 rounded-lg shadow-lg">
+<span class="material-symbols-outlined text-2xl font-bold" data-icon="sports_soccer">sports_soccer</span>
+</div>
+<div class="flex flex-col">
+<h1 class="font-display-lg text-headline-md font-black text-on-surface leading-none tracking-tighter uppercase italic">FIFA WORLD CUP</h1>
+<span class="text-label-sm font-bold tracking-[0.2em] text-primary">2026™ PREDICTOR</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="hover:bg-surface-container-high transition-colors p-sm rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-container-high transition-colors p-sm rounded-full">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="px-margin-mobile pt-lg max-w-5xl mx-auto">
+<!-- Hero Section for Leaderboard -->
+<section class="mb-xl">
+<div class="flex flex-col mb-lg">
+<span class="text-primary font-bold tracking-widest uppercase text-label-sm">Host City Standings</span>
+<h2 class="font-display-lg text-display-lg text-on-surface uppercase italic leading-none">TOP RANKS</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter items-end mt-md">
+<!-- Silver (2nd) -->
+<div class="order-2 md:order-1 bg-white rounded-2xl p-md border-b-8 border-slate-300 shadow-xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute -top-4 -right-4 w-24 h-24 bg-slate-100 rounded-full opacity-50 flex items-center justify-center pt-4 pr-4">
+<span class="font-display-lg text-headline-lg text-slate-300" style="font-size: 64px;">2</span>
+</div>
+<div class="relative z-10">
+<div class="w-16 h-16 rounded-full border-4 border-white shadow-md mb-sm overflow-hidden ring-4 ring-slate-100">
+<img alt="Jasper" class="w-full h-full object-cover" data-alt="Jasper avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC4j0Dxsav4LElZRzhcDW09P4NWGuZULM2zo8QvA8Q8gaRLp4mp4OXfbndJDT3gPAXonYK_DtSaCQgg-d4TSwx0mQ1Fk0zu4BKoOVuzOiZ4IoTAxqjp51pG1VHobavj0BH5dc28NUYo9uaza3Jypmh4Tn9SIpt0wp3RZ9WDdydz5y2pLUgzOIi0TMfU-MQImKuFIXZxLcTAJrdR15sJTNbaUtnS3QYKz3YzJJasuHcuU7REHRVIJPvXAu0nG0fQPjKu894TW6hGZoV"/>
+</div>
+<p class="font-label-lg text-slate-500 uppercase tracking-widest mb-xs">Jasper V.</p>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-headline-lg text-on-surface italic">842</span>
+<span class="text-label-sm font-bold text-slate-400">PTS</span>
+</div>
+</div>
+</div>
+<!-- Gold (1st) -->
+<div class="order-1 md:order-2 bg-primary rounded-2xl p-lg border-b-8 border-on-primary-fixed-variant shadow-2xl relative overflow-hidden scale-110 z-20 group hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute -top-6 -right-6 w-32 h-32 bg-on-primary/10 rounded-full flex items-center justify-center pt-6 pr-6">
+<span class="font-display-lg text-display-lg text-on-primary/20" style="font-size: 80px;">1</span>
+</div>
+<div class="relative z-10 text-white">
+<div class="w-20 h-20 rounded-full border-4 border-secondary-fixed shadow-2xl mb-sm overflow-hidden ring-4 ring-primary-container">
+<img alt="Sophie" class="w-full h-full object-cover" data-alt="Sophie avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDenn0Am8nvDLTFm9Rqj9tCxtojzv5VPZ842MMk8556o1SY1XkhyAzw7GOLALKvRSMtVLZQJ4fIdPWoA1k2-MuCqWpm5c6CcfeHhuVBurJUnCXe3hGySzjrpnscMH_-TfVxxxDTPyh4iBwnaAgTL9bHJgH7vu-O1Cj5DMu45_yjav-YqG9xrjhrUCXvaEjTuPnRHXpgcotDC5MOizlwjDTu6beN-6H5P5LnY35hvljahQaPGlwZ9jxRRvnhAo3gWD1YzJXM_2GlwVwp"/>
+</div>
+<div class="flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined text-secondary-fixed fill-current" data-icon="stars">stars</span>
+<p class="font-label-lg text-on-primary-container uppercase tracking-[0.2em]">Sophie de K.</p>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg italic">895</span>
+<span class="text-label-lg font-bold text-secondary-fixed">PTS</span>
+</div>
+</div>
+</div>
+<!-- Bronze (3rd) -->
+<div class="order-3 bg-white rounded-2xl p-md border-b-8 border-orange-200 shadow-xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute -top-4 -right-4 w-24 h-24 bg-orange-50 rounded-full opacity-50 flex items-center justify-center pt-4 pr-4">
+<span class="font-display-lg text-headline-lg text-orange-200" style="font-size: 64px;">3</span>
+</div>
+<div class="relative z-10">
+<div class="w-16 h-16 rounded-full border-4 border-white shadow-md mb-sm overflow-hidden ring-4 ring-orange-50">
+<img alt="Mark" class="w-full h-full object-cover" data-alt="Mark avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9Hy6TH5BMBKUkZspAFJaEQk0Vxo51qt6XXqcANN2FOeEYbhU-Z1b7Lu4mvZBQPu0iqA7yu9CSxUMef4zi6EOCrAd-U7at5ZviHhUrC6rtuGcNGUhUGzri57wBj4yTmf_0TWtEma6K1l86TLSnK6pRkIsC6P0agaensbpIf_RfRdTC4sHXNqvty0520J8JdGT8k618LXCEbZ8EaN8WnmO5bQPE6gNpoHHzzpO_AA1kUSU_Wy3PoLFmg9vdmMZdwDJn_7WcvxNVReMt"/>
+</div>
+<p class="font-label-lg text-slate-500 uppercase tracking-widest mb-xs">Mark Bakker</p>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-headline-lg text-on-surface italic">810</span>
+<span class="text-label-sm font-bold text-slate-400">PTS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Rankings Table -->
+<section class="bg-white rounded-3xl border border-outline-variant overflow-hidden shadow-lg mb-xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant border-b border-outline-variant">
+<tr>
+<th class="p-md font-label-lg uppercase tracking-widest pl-lg">Rank</th>
+<th class="p-md font-label-lg uppercase tracking-widest">Player</th>
+<th class="p-md font-label-lg uppercase tracking-widest text-center">Correct</th>
+<th class="p-md font-label-lg uppercase tracking-widest text-right pr-lg">Score</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md pl-lg font-display-lg text-headline-md text-surface-variant group-hover:text-primary transition-colors italic">04</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-dim overflow-hidden ring-2 ring-white shadow-sm">
+<img alt="Emma" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdo9UuE4rN71uaa3Wp6Qo85nmj10tbs1ypHh1zhukRwm6bu299Iw1qqv8RP956I16C4poUwdO38B0xJRDS3Wva94ughaaZl5oAMae2xvcL1MzqiXNHPkiNMgmIM3B-TlFSgZ4lOcM4Ov9G4pjjQDfn7PP5UL_bWxKWycJ3SKdhqX7E3nO3awwtwT7YnEinO88zPCArkZBGpxpAucCCFMd-6UENtiO1Y7-T9pg7_haWmdFc1rNiuTX36tayanqlBENBQXzNZj1lLq0c"/>
+</div>
+<span class="font-bold text-on-surface">Emma Willems</span>
+</div>
+</td>
+<td class="p-md text-center font-bold text-on-surface-variant">12</td>
+<td class="p-md text-right pr-lg font-display-lg text-headline-md text-on-surface italic">792</td>
+</tr>
+<!-- Row 5 (User Highlight) -->
+<tr class="bg-primary/5 border-l-4 border-l-primary relative">
+<td class="p-md pl-lg font-display-lg text-headline-md text-primary italic">05</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden ring-2 ring-primary shadow-md">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDUkdO-HjKgaTc6kSWd_RiDXvOU6Oa0afcRJaLYHfEcC73D3WtbP9d6-cGIwXfjUj3tgcXd3f8xvg96bElSRQj_3D9LqYLeDfIWWinlV1-utg1m1DsnxL9VksrdpulYXw-SAbzeFnKjQm2WxvVpSVzXm-ecvOYmM1LgnOnbReP7TD746TYNKfKOm1VRjUHAkPfiwIG3z8FMUAOvyEaKzumPvbaRyF9QAQ4_CJxcHV937kGtJpfgiP3d38kHJAcqK34gMvTAUpb3d1y"/>
+</div>
+<div>
+<span class="font-black text-primary uppercase italic">You (Bas van D.)</span>
+<div class="flex gap-1 mt-0.5">
+<span class="bg-primary text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-tighter uppercase italic">Verified</span>
+</div>
+</div>
+</div>
+</td>
+<td class="p-md text-center font-bold text-primary">10</td>
+<td class="p-md text-right pr-lg font-display-lg text-headline-md text-primary italic">755</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md pl-lg font-display-lg text-headline-md text-surface-variant italic">06</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-dim overflow-hidden ring-2 ring-white">
+<img alt="Lars" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx2yca1w5jRayqbl_GPp8pDmWOZ4Q7ri6dbCLU7n6fxQ4-i5_jxkrUysI1uTcIn2KvRlWjYE0dM7s_wz8uaYBtzK7AZFAjtFcEOOWkLeakfd4cZCY7SCkrwY1z1aV9fUn1X7suEgcFvBLcuO7iSC6H4sk60vO1UCkdymQ7-srVfDy8_r1cOHhuPmIAG2sAVoCqCOQNkr_60TyTRr-IAOmgVWnDYV5eVKMmZ-O0I864qXIirO8b11B7LaE-Iq09zC18AlhN5ZA6wSsz"/>
+</div>
+<span class="font-bold">Lars Janssen</span>
+</div>
+</td>
+<td class="p-md text-center font-bold text-on-surface-variant">9</td>
+<td class="p-md text-right pr-lg font-display-lg text-headline-md text-on-surface italic">712</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md pl-lg font-display-lg text-headline-md text-surface-variant italic">07</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-dim overflow-hidden ring-2 ring-white">
+<img alt="Sanne" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcFu4n7F3nSg2g8GLZjcGRJFC3D0VMWe6Bc7xD18MuGwVtBp2J7oOu8_UuiCHwm-gR36_FJKArH3WZe21f3KzV4HHawrK5QdWcTxfWk2SwJMs-g0UOCjztC4ie78pO6_cHYUYholg_j1f7e4s6uWF9apfh0L41PEgYOi6PvWC_wIa5Q9juNmZiYEFv-NqY0w198xGXxvWw_rh1KAIv-Xzg31yqwfoAOThm4pavqx7b4kS2C3b0NosDYH0HvDvvTPXfXR6D-gVda6_p"/>
+</div>
+<span class="font-bold">Sanne Meijer</span>
+</div>
+</td>
+<td class="p-md text-center font-bold text-on-surface-variant">8</td>
+<td class="p-md text-right pr-lg font-display-lg text-headline-md text-on-surface italic">688</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md bg-white text-center border-t border-outline-variant">
+<button class="font-label-lg uppercase text-primary font-black italic hover:bg-primary/5 px-6 py-2 rounded-full transition-all flex items-center justify-center gap-sm mx-auto">
+                VIEW ALL 142 PLAYERS
+                <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Key Stats Chip Row -->
+<div class="flex flex-wrap gap-md mt-lg">
+<div class="bg-white px-md py-sm rounded-xl font-label-lg border border-outline-variant flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+<span class="font-bold">142 DEELNEMERS</span>
+</div>
+<div class="bg-secondary-container px-md py-sm rounded-xl font-label-lg border border-secondary flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="trending_up">trending_up</span>
+<span class="font-bold text-on-secondary-container uppercase italic">Top 4% Global</span>
+</div>
+<div class="bg-white px-md py-sm rounded-xl font-label-lg border border-outline-variant flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<span class="font-bold uppercase">Round 3 of 7</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-white dark:bg-inverse-surface border-t border-outline-variant shadow-[0px_-4px_20px_0px_rgba(0,0,0,0.05)] rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm uppercase font-bold tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="sports_score">sports_score</span>
+<span class="font-label-sm uppercase font-bold tracking-widest">Predict</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary transition-all bg-primary/10 px-6 py-2 rounded-2xl relative" href="#">
+<div class="absolute -top-1 w-8 h-1 bg-primary rounded-full"></div>
+<span class="material-symbols-outlined mb-1 fill-current" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-sm uppercase font-black italic tracking-widest">Ranks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_month">calendar_month</span>
+<span class="font-label-sm uppercase font-bold tracking-widest">Fixtures</span>
+</a>
+</nav>
+</body></html>

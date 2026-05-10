@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="nl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-pitch-pattern {
+            background-color: #f9f9f9;
+            background-image: radial-gradient(#cbc3d9 0.5px, transparent 0.5px);
+            background-size: 32px 32px;
+        }
+        .ease-spring {
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .wc26-gradient {
+            background: linear-gradient(135deg, #4700b0 0%, #6200eb 50%, #7f0011 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#22005d",
+                        "secondary-container": "#5ce9fe",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-tertiary-fixed": "#410004",
+                        "tertiary-fixed-dim": "#ffb3ae",
+                        "surface-container-low": "#f3f3f4",
+                        "on-surface-variant": "#494456",
+                        "primary-fixed-dim": "#cfbcff",
+                        "on-primary-container": "#cfbdff",
+                        "background": "#f9f9f9",
+                        "primary": "#4700b0",
+                        "outline-variant": "#cbc3d9",
+                        "inverse-primary": "#cfbcff",
+                        "inverse-surface": "#2f3131",
+                        "primary-container": "#6200eb",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#a80b1d",
+                        "primary-fixed": "#e9ddff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#7f0011",
+                        "secondary": "#006874",
+                        "surface-container": "#eeeeee",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-container": "#ffb4af",
+                        "surface": "#f9f9f9",
+                        "outline": "#7b7488",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#98f0ff",
+                        "on-background": "#1a1c1c",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-secondary-fixed": "#001f24",
+                        "surface-tint": "#6e24f6",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdad7",
+                        "on-secondary-container": "#006773",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed-variant": "#5400cc",
+                        "on-tertiary-fixed-variant": "#930015",
+                        "secondary-fixed-dim": "#45d8ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "xl": "80px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Lexend"],
+                        "body-md": ["Lexend"],
+                        "headline-lg": ["Lexend"],
+                        "label-lg": ["Lexend"],
+                        "body-lg": ["Lexend"],
+                        "label-sm": ["Lexend"],
+                        "display-lg": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-pitch-pattern text-on-surface font-body-md min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile h-20 w-full z-50 bg-surface-container-lowest border-b border-outline-variant shadow-sm sticky top-0">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 flex items-center justify-center">
+<svg class="w-10 h-10" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#4700b0" stroke-width="2"></circle>
+<text fill="#4700b0" font-family="Lexend" font-size="24" font-weight="900" text-anchor="middle" x="50" y="55">26</text>
+<path d="M50 10 L50 20 M90 50 L80 50 M50 90 L50 80 M10 50 L20 50" stroke="#6200eb" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+</div>
+<h1 class="font-display-lg text-headline-md font-black text-primary tracking-tight">WC2026</h1>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-high transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-high transition-colors" data-icon="account_circle">account_circle</button>
+</div>
+</header>
+<main class="px-margin-mobile pt-md space-y-lg max-w-7xl mx-auto">
+<!-- Welcome & User Status (Hero Section) -->
+<section class="relative overflow-hidden rounded-xl wc26-gradient p-lg shadow-xl text-on-primary">
+<div class="absolute -right-12 -top-12 opacity-10 rotate-45 pointer-events-none">
+<span class="material-symbols-outlined text-[240px]" data-icon="sports_soccer">sports_soccer</span>
+</div>
+<div class="relative z-10">
+<p class="font-label-lg text-label-sm mb-xs opacity-80 uppercase tracking-widest">Jasper's Dashboard</p>
+<h2 class="font-headline-lg text-display-lg mb-lg leading-tight">Ready for 2026?</h2>
+<div class="flex flex-wrap items-center gap-md">
+<div class="bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-md border border-white/20">
+<p class="text-label-sm font-label-lg uppercase text-secondary-fixed">Global Rank</p>
+<p class="text-headline-lg font-headline-lg">#142</p>
+</div>
+<div class="bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-md border border-white/20">
+<p class="text-label-sm font-label-lg uppercase text-secondary-fixed">Total Points</p>
+<p class="text-headline-lg font-headline-lg">1,240</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Next 3 Matches Prediction -->
+<section class="space-y-sm">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-background flex items-center gap-xs">
+<span class="w-2 h-8 bg-secondary-container rounded-full"></span>
+                Predictions
+            </h3>
+<a class="text-label-lg text-primary hover:underline" href="#">View Schedule</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Match Card 1 (Live/Active) -->
+<div class="bg-surface-container-lowest border-2 border-primary rounded-xl p-md shadow-lg relative overflow-hidden group">
+<div class="flex justify-between items-center mb-md">
+<span class="bg-primary text-on-primary px-3 py-1 rounded-full text-label-sm font-semibold">GROUP A</span>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
+<span class="text-label-sm font-bold text-red-500">LIVE</span>
+</div>
+</div>
+<div class="flex justify-between items-center mb-lg px-2">
+<div class="text-center flex-1">
+<div class="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-outline-variant shadow-sm">
+<img alt="NL" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRKEv2QrQ8x7-BnLSTn25Z8eV4M2MRW6Q9zf2Dnou0XXzjtjckZrOVAOicBBC9smbYHiZ20fg9_FUfDeRP2T4CXJe9ZAFrzhgK5ohhf_WT2S43DyCok3D--XkIPdyOZVPx5OjdZU-o7QluyFLWlPhbHH5SVwja29kNC2FDXo0cqtQnv8ucXjZqvsyK11Ti4pHSFbe1KcQ3ajYuo6uvH4rJW2aSGclsSRdbhiO8eJZUnKeJ3szOwiBe6urFjlbN1EZuVBovNBcCeelp"/>
+</div>
+<p class="font-bold text-label-lg">NED</p>
+</div>
+<div class="text-display-lg font-black text-primary px-4">2 - 1</div>
+<div class="text-center flex-1">
+<div class="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-outline-variant shadow-sm">
+<img alt="QA" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUoSXzT-lcNbZAqTGw6aPdNyE_9sNytMhINNABKz9lztddvSjOAYeR937V04SqYuA8-EjBb7u_bp7FDDP7kmAFN91BdsYRG6r7a0P00Q91tBAMQ7n2d5N4N5tXB5rjESntfVv3vygx_M7JeinVfa7KKDDtRUoKzD0OZsKv7mjdFBTLEqv--SHJdnP4kY_MWLJFlmvDO0nM9zRGldCvpff1NrzFD6B4Wy-lou7QX2aEzVBDUSi-7N_x6-yZ2RN0g639s0BkI1BSoVQO"/>
+</div>
+<p class="font-bold text-label-lg">QAT</p>
+</div>
+</div>
+<button class="w-full py-4 bg-secondary text-on-secondary font-bold text-label-lg uppercase rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-md">
+                    Update Prediction
+                </button>
+</div>
+<!-- Match Card 2 (Upcoming) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm relative overflow-hidden">
+<div class="flex justify-between items-center mb-md">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-label-sm font-semibold">GROUP B</span>
+<span class="text-label-sm font-medium text-on-surface-variant">Tomorrow 20:00</span>
+</div>
+<div class="flex justify-between items-center mb-lg px-2">
+<div class="text-center flex-1">
+<div class="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="ENG" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTj5wt-fEySXGxSpqSuYg-fGnZoqZKo0RSpd1ZX3RUttk10zMTIa9T7my06Vu3RHDg7Y7VEORp_3M1GyjAXiVOKAutm1mah5-mbvFX1XfD6fXsMtzK7DWpPhc2IyXz9bhvHHqqmRBE4i1My8yztsoZ-ajE8RsaEg0PG6J-g0ixYtgifiDg9dtme7LxkR8FwTAN8S4Mi50lSpbAc9luUIweB8l7BVVqK9pFwSdZbmFc0bBlxK7042S5H84m5XaPjFSXCuJo3GI2_Qvt"/>
+</div>
+<p class="font-bold text-label-lg">ENG</p>
+</div>
+<div class="text-headline-md font-black text-outline-variant italic">VS</div>
+<div class="text-center flex-1">
+<div class="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="USA" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqMS2hnnxs_zufXg4Iy9WCNVE0k6KrUQHU_Ph0-b2-8ROrdRgq1fJkIPTAYXH7JedyrX1QB-KpMg8M5JCXGwaeVx3psZPmTTwgz_uchTJgSgLZTRx-TX9jr5tX5JEdDgPK-B6rhDgKaiT8nYD_EEnBxA0yquTyGmYOk9epzTwc8qGpBLu3QpV_YBmmyau56WRrXVXVXC1TgeIMYSsuT3wcSHBmtYsBr2I4GZVUG527UlaW7zLYTMQJW2p2UTfr7Syhii-pJ8t8UDuj"/>
+</div>
+<p class="font-bold text-label-lg">USA</p>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-bold text-label-lg uppercase rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-md">
+                    Set Prediction
+                </button>
+</div>
+<!-- Match Card 3 (Upcoming) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm relative overflow-hidden">
+<div class="flex justify-between items-center mb-md">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-label-sm font-semibold">GROUP C</span>
+<span class="text-label-sm font-medium text-on-surface-variant">22 NOV 11:00</span>
+</div>
+<div class="flex justify-between items-center mb-lg px-2">
+<div class="text-center flex-1">
+<div class="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="ARG" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRWdsEeU7ande2lNfmT8FJeptZ_Eln2_MywHSQ9A7YI9y79Q4bshSfOhvo3P1p_Y23TW0VsCzhWDgftzfMS6a-69D6uYFKBL0BtqIAAl53HjHwIEn3qVnG-W22zptjsT2rezYsMgulXZAhUWI1QFLWP-4SKTC-d63Y_tJfMqxlUwN5qUhUm_5JAe4tPWlY8XQyN19vTDa0slhVhRLaLvpDH96TQuBnTsMGTJZVHJLIFFGsxlETZCw56BXd7UDeQ0jFYQdP7S8UYn4W"/>
+</div>
+<p class="font-bold text-label-lg">ARG</p>
+</div>
+<div class="text-headline-md font-black text-outline-variant italic">VS</div>
+<div class="text-center flex-1">
+<div class="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden border-2 border-outline-variant">
+<img alt="KSA" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoGNB96IlhJy9vII4t2oO6zNQ1YffYe0XKxAOVTbdVy1qJNQGWCVVAOlhSct89-s_1O2Pr48DV8GmyAiLkTxNXBMowdewRkCpeoVGBl6yfmoqhrc5Ic9iEw-tXCuB8Jd0lhk7y7foI_OX-s5wtxtnmdKE5c9qgr60D03u1mPYp4HiujhTu4H-lHnTUUpDjQuQOwyn3MiQohk6v1wGHfZGvbPtD9uaXl2zm4OLbF3oKBpGqnru0eeD9-BTlL3tdmwkSMLngQTxUHieA"/>
+</div>
+<p class="font-bold text-label-lg">KSA</p>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-bold text-label-lg uppercase rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-md">
+                    Set Prediction
+                </button>
+</div>
+</div>
+</section>
+<!-- Leaderboard -->
+<section class="space-y-sm">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-background flex items-center gap-xs">
+<span class="w-2 h-8 bg-secondary-fixed-dim rounded-full"></span>
+                Leaderboard
+            </h3>
+<a class="text-label-lg text-primary hover:underline" href="#">Full Rankings</a>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-md overflow-hidden">
+<div class="divide-y divide-outline-variant/30">
+<!-- Rank 1 -->
+<div class="flex items-center justify-between p-md bg-primary/5 border-l-4 border-primary">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-yellow-400 flex items-center justify-center rounded-lg shadow-sm font-bold text-on-primary-fixed">1</div>
+<div>
+<p class="font-bold text-body-lg">Sander V.</p>
+<p class="text-label-sm font-medium text-secondary">24 ACCURATE PREDICTIONS</p>
+</div>
+</div>
+<p class="font-black text-headline-md text-primary">1,890</p>
+</div>
+<!-- Rank 2 -->
+<div class="flex items-center justify-between p-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-slate-200 flex items-center justify-center rounded-lg shadow-sm font-bold">2</div>
+<div>
+<p class="font-bold text-body-lg">Emma de Boer</p>
+<p class="text-label-sm font-medium text-on-surface-variant">21 ACCURATE PREDICTIONS</p>
+</div>
+</div>
+<p class="font-black text-headline-md text-on-surface">1,750</p>
+</div>
+<!-- Rank 3 -->
+<div class="flex items-center justify-between p-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-amber-600 flex items-center justify-center rounded-lg shadow-sm font-bold text-white">3</div>
+<div>
+<p class="font-bold text-body-lg">Mark de Groot</p>
+<p class="text-label-sm font-medium text-on-surface-variant">20 ACCURATE PREDICTIONS</p>
+</div>
+</div>
+<p class="font-black text-headline-md text-on-surface">1,720</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Quick Action FAB -->
+<button class="fixed right-6 bottom-28 wc26-gradient text-on-primary w-16 h-16 rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-all z-40 border-2 border-white/20">
+<span class="material-symbols-outlined text-[36px]" data-icon="add">add</span>
+</button>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-surface-container-lowest border-t border-outline-variant shadow-[0_-8px_24px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-primary group" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm uppercase tracking-wider font-bold">Home</span>
+<div class="w-1 h-1 bg-primary rounded-full mt-1"></div>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="ads_click">ads_click</span>
+<span class="font-label-sm uppercase tracking-wider font-bold">Predict</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-sm uppercase tracking-wider font-bold">Ranks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="event_note">event_note</span>
+<span class="font-label-sm uppercase tracking-wider font-bold">Matches</span>
+</a>
+</nav>
+</body></html>
