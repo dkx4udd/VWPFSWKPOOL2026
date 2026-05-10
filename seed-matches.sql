@@ -1,268 +1,348 @@
--- WK 2026 Wedstrijdschema — groepsfase
--- Alle tijden in UTC. WK start 11 juni 2026, finale 19 juli 2026.
--- Stadia: Azteca (MEX), Rose Bowl (LA), MetLife (NJ), AT&T (DAL),
---         SoFi (LA), Hard Rock (MIA), Levi's (SF), Gillette (BOS),
---         Lincoln Financial (PHI), Arrowhead (KC), BC Place (VAN),
---         BMO Field (TOR)
-
--- Helper: haal team-ids op via subquery
--- Groepsfase: elke groep speelt 6 wedstrijden (A vs B, A vs C, A vs D, B vs C, B vs D, C vs D)
+-- WK 2026 Wedstrijdschema — correcte ESPN/FIFA data
+-- Alle tijden in UTC (ESPN-tijden zijn CET/CEST = UTC+2, dus -2u)
+-- WK start 11 juni 2026, finale 19 juli 2026
+-- Stadia: Azteca (MEX), AKRON (GDL), Monterrey (MTY),
+--   MetLife (NJ), AT&T (DAL), SoFi (LA), Rose Bowl (LA),
+--   Hard Rock (MIA), Levi's (SF), Gillette (BOS),
+--   Lincoln Financial (PHI), Arrowhead (KC),
+--   BC Place (VAN), BMO Field (TOR), Lumen Field (SEA),
+--   NRG (HOU), Mercedes-Benz (ATL)
 
 DO $$
 DECLARE
   -- Groep A
-  mx UUID; ec UUID; hu UUID; nz UUID;
+  mx UUID; za UUID; kr UUID; cz UUID;
   -- Groep B
-  ar UUID; cl UUID; ma UUID; ua UUID;
+  ca UUID; ba UUID; qa UUID; ch UUID;
   -- Groep C
-  ca UUID; de UUID; sk UUID; cm UUID;
+  br UUID; ma UUID; ht UUID; sco UUID;
   -- Groep D
-  jp UUID; hr UUID; ng UUID; pe UUID;
+  us UUID; py UUID; au UUID; tr UUID;
   -- Groep E
-  es UUID; sn UUID; dk UUID; uz UUID;
+  de UUID; cw UUID; ci UUID; ec UUID;
   -- Groep F
-  pt UUID; uy UUID; ir UUID; tz UUID;
+  nl UUID; jp UUID; se UUID; tn UUID;
   -- Groep G
-  us UUID; co UUID; tn UUID; ug UUID;
+  be UUID; eg UUID; ir UUID; nz UUID;
   -- Groep H
-  nl UUID; kr UUID; iq UUID; jm UUID;
+  es UUID; cv UUID; sa UUID; uy UUID;
   -- Groep I
-  en UUID; rs UUID; cr UUID; ke UUID;
+  fr UUID; sn UUID; iq UUID; no UUID;
   -- Groep J
-  br UUID; no UUID; sa UUID; cu UUID;
+  ar UUID; dz UUID; at UUID; jo UUID;
   -- Groep K
-  fr UUID; au UUID; eg UUID; gt UUID;
+  pt UUID; cd UUID; uz UUID; co UUID;
   -- Groep L
-  be UUID; at UUID; pa UUID; ci UUID;
+  en UUID; hr UUID; gh UUID; pa UUID;
 BEGIN
-  SELECT id INTO mx FROM teams WHERE "isoCode"='MX';
-  SELECT id INTO ec FROM teams WHERE "isoCode"='EC';
-  SELECT id INTO hu FROM teams WHERE "isoCode"='HU';
-  SELECT id INTO nz FROM teams WHERE "isoCode"='NZ';
-  SELECT id INTO ar FROM teams WHERE "isoCode"='AR';
-  SELECT id INTO cl FROM teams WHERE "isoCode"='CL';
-  SELECT id INTO ma FROM teams WHERE "isoCode"='MA';
-  SELECT id INTO ua FROM teams WHERE "isoCode"='UA';
-  SELECT id INTO ca FROM teams WHERE "isoCode"='CA';
-  SELECT id INTO de FROM teams WHERE "isoCode"='DE';
-  SELECT id INTO sk FROM teams WHERE "isoCode"='SK';
-  SELECT id INTO cm FROM teams WHERE "isoCode"='CM';
-  SELECT id INTO jp FROM teams WHERE "isoCode"='JP';
-  SELECT id INTO hr FROM teams WHERE "isoCode"='HR';
-  SELECT id INTO ng FROM teams WHERE "isoCode"='NG';
-  SELECT id INTO pe FROM teams WHERE "isoCode"='PE';
-  SELECT id INTO es FROM teams WHERE "isoCode"='ES';
-  SELECT id INTO sn FROM teams WHERE "isoCode"='SN';
-  SELECT id INTO dk FROM teams WHERE "isoCode"='DK';
-  SELECT id INTO uz FROM teams WHERE "isoCode"='UZ';
-  SELECT id INTO pt FROM teams WHERE "isoCode"='PT';
-  SELECT id INTO uy FROM teams WHERE "isoCode"='UY';
-  SELECT id INTO ir FROM teams WHERE "isoCode"='IR';
-  SELECT id INTO tz FROM teams WHERE "isoCode"='TZ';
-  SELECT id INTO us FROM teams WHERE "isoCode"='US';
-  SELECT id INTO co FROM teams WHERE "isoCode"='CO';
-  SELECT id INTO tn FROM teams WHERE "isoCode"='TN';
-  SELECT id INTO ug FROM teams WHERE "isoCode"='UG';
-  SELECT id INTO nl FROM teams WHERE "isoCode"='NL';
-  SELECT id INTO kr FROM teams WHERE "isoCode"='KR';
-  SELECT id INTO iq FROM teams WHERE "isoCode"='IQ';
-  SELECT id INTO jm FROM teams WHERE "isoCode"='JM';
-  SELECT id INTO en FROM teams WHERE "isoCode"='EN';
-  SELECT id INTO rs FROM teams WHERE "isoCode"='RS';
-  SELECT id INTO cr FROM teams WHERE "isoCode"='CR';
-  SELECT id INTO ke FROM teams WHERE "isoCode"='KE';
-  SELECT id INTO br FROM teams WHERE "isoCode"='BR';
-  SELECT id INTO no FROM teams WHERE "isoCode"='NO';
-  SELECT id INTO sa FROM teams WHERE "isoCode"='SA';
-  SELECT id INTO cu FROM teams WHERE "isoCode"='CU';
-  SELECT id INTO fr FROM teams WHERE "isoCode"='FR';
-  SELECT id INTO au FROM teams WHERE "isoCode"='AU';
-  SELECT id INTO eg FROM teams WHERE "isoCode"='EG';
-  SELECT id INTO gt FROM teams WHERE "isoCode"='GT';
-  SELECT id INTO be FROM teams WHERE "isoCode"='BE';
-  SELECT id INTO at FROM teams WHERE "isoCode"='AT';
-  SELECT id INTO pa FROM teams WHERE "isoCode"='PA';
-  SELECT id INTO ci FROM teams WHERE "isoCode"='CI';
+  SELECT id INTO mx  FROM teams WHERE "isoCode"='MX';
+  SELECT id INTO za  FROM teams WHERE "isoCode"='ZA';
+  SELECT id INTO kr  FROM teams WHERE "isoCode"='KR';
+  SELECT id INTO cz  FROM teams WHERE "isoCode"='CZ';
+  SELECT id INTO ca  FROM teams WHERE "isoCode"='CA';
+  SELECT id INTO ba  FROM teams WHERE "isoCode"='BA';
+  SELECT id INTO qa  FROM teams WHERE "isoCode"='QA';
+  SELECT id INTO ch  FROM teams WHERE "isoCode"='CH';
+  SELECT id INTO br  FROM teams WHERE "isoCode"='BR';
+  SELECT id INTO ma  FROM teams WHERE "isoCode"='MA';
+  SELECT id INTO ht  FROM teams WHERE "isoCode"='HT';
+  SELECT id INTO sco FROM teams WHERE "isoCode"='SCO';
+  SELECT id INTO us  FROM teams WHERE "isoCode"='US';
+  SELECT id INTO py  FROM teams WHERE "isoCode"='PY';
+  SELECT id INTO au  FROM teams WHERE "isoCode"='AU';
+  SELECT id INTO tr  FROM teams WHERE "isoCode"='TR';
+  SELECT id INTO de  FROM teams WHERE "isoCode"='DE';
+  SELECT id INTO cw  FROM teams WHERE "isoCode"='CW';
+  SELECT id INTO ci  FROM teams WHERE "isoCode"='CI';
+  SELECT id INTO ec  FROM teams WHERE "isoCode"='EC';
+  SELECT id INTO nl  FROM teams WHERE "isoCode"='NL';
+  SELECT id INTO jp  FROM teams WHERE "isoCode"='JP';
+  SELECT id INTO se  FROM teams WHERE "isoCode"='SE';
+  SELECT id INTO tn  FROM teams WHERE "isoCode"='TN';
+  SELECT id INTO be  FROM teams WHERE "isoCode"='BE';
+  SELECT id INTO eg  FROM teams WHERE "isoCode"='EG';
+  SELECT id INTO ir  FROM teams WHERE "isoCode"='IR';
+  SELECT id INTO nz  FROM teams WHERE "isoCode"='NZ';
+  SELECT id INTO es  FROM teams WHERE "isoCode"='ES';
+  SELECT id INTO cv  FROM teams WHERE "isoCode"='CV';
+  SELECT id INTO sa  FROM teams WHERE "isoCode"='SA';
+  SELECT id INTO uy  FROM teams WHERE "isoCode"='UY';
+  SELECT id INTO fr  FROM teams WHERE "isoCode"='FR';
+  SELECT id INTO sn  FROM teams WHERE "isoCode"='SN';
+  SELECT id INTO iq  FROM teams WHERE "isoCode"='IQ';
+  SELECT id INTO no  FROM teams WHERE "isoCode"='NO';
+  SELECT id INTO ar  FROM teams WHERE "isoCode"='AR';
+  SELECT id INTO dz  FROM teams WHERE "isoCode"='DZ';
+  SELECT id INTO at  FROM teams WHERE "isoCode"='AT';
+  SELECT id INTO jo  FROM teams WHERE "isoCode"='JO';
+  SELECT id INTO pt  FROM teams WHERE "isoCode"='PT';
+  SELECT id INTO cd  FROM teams WHERE "isoCode"='CD';
+  SELECT id INTO uz  FROM teams WHERE "isoCode"='UZ';
+  SELECT id INTO co  FROM teams WHERE "isoCode"='CO';
+  SELECT id INTO en  FROM teams WHERE "isoCode"='EN';
+  SELECT id INTO hr  FROM teams WHERE "isoCode"='HR';
+  SELECT id INTO gh  FROM teams WHERE "isoCode"='GH';
+  SELECT id INTO pa  FROM teams WHERE "isoCode"='PA';
 
   -- ============================================================
-  -- GROEPSFASE (speeldag 1: 11-16 juni)
+  -- GROEPSFASE SPEELDAG 1
   -- ============================================================
 
-  -- Groep A
+  -- Groep A: 11-12 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (mx,ec,'2026-06-11 21:00:00+00','group','A','Estadio Azteca','Mexico-Stad'),
-    (hu,nz,'2026-06-12 00:00:00+00','group','A','Rose Bowl','Los Angeles');
+    (mx, za, '2026-06-11 19:00:00+00','group','A','Estadio Azteca','Mexico-Stad'),
+    (kr, cz, '2026-06-12 02:00:00+00','group','A','Estadio AKRON','Guadalajara');
 
-  -- Groep B
+  -- Groep B: 12-13 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (ar,cl,'2026-06-12 18:00:00+00','group','B','MetLife Stadium','New York/New Jersey'),
-    (ma,ua,'2026-06-12 21:00:00+00','group','B','AT&T Stadium','Dallas');
+    (ca, ba, '2026-06-12 19:00:00+00','group','B','BMO Field','Toronto'),
+    (qa, ch, '2026-06-13 19:00:00+00','group','B','Levi''s Stadium','San Francisco');
 
-  -- Groep C
+  -- Groep D: 13 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (ca,de,'2026-06-13 18:00:00+00','group','C','BC Place','Vancouver'),
-    (sk,cm,'2026-06-13 21:00:00+00','group','C','BMO Field','Toronto');
+    (us, py, '2026-06-13 01:00:00+00','group','D','SoFi Stadium','Los Angeles'),
+    (au, tr, '2026-06-13 04:00:00+00','group','D','BC Place','Vancouver');
 
-  -- Groep D
+  -- Groep C: 13-14 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (jp,hr,'2026-06-14 18:00:00+00','group','D','SoFi Stadium','Los Angeles'),
-    (ng,pe,'2026-06-14 21:00:00+00','group','D','Hard Rock Stadium','Miami');
+    (br, ma, '2026-06-13 22:00:00+00','group','C','MetLife Stadium','New York/New Jersey'),
+    (ht, sco,'2026-06-14 01:00:00+00','group','C','Gillette Stadium','Boston');
 
-  -- Groep E
+  -- Groep E: 14 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (es,sn,'2026-06-15 18:00:00+00','group','E','Levi''s Stadium','San Francisco'),
-    (dk,uz,'2026-06-15 21:00:00+00','group','E','Gillette Stadium','Boston');
+    (de, cw, '2026-06-14 17:00:00+00','group','E','NRG Stadium','Houston'),
+    (ci, ec, '2026-06-14 23:00:00+00','group','E','Lincoln Financial Field','Philadelphia');
 
-  -- Groep F
+  -- Groep F: 14-15 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (pt,uy,'2026-06-16 18:00:00+00','group','F','Lincoln Financial Field','Philadelphia'),
-    (ir,tz,'2026-06-16 21:00:00+00','group','F','Arrowhead Stadium','Kansas City');
+    (nl, jp, '2026-06-14 20:00:00+00','group','F','AT&T Stadium','Dallas'),
+    (se, tn, '2026-06-15 02:00:00+00','group','F','Estadio Monterrey','Monterrey');
 
-  -- Groep G
+  -- Groep H: 15 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (us,co,'2026-06-17 18:00:00+00','group','G','MetLife Stadium','New York/New Jersey'),
-    (tn,ug,'2026-06-17 21:00:00+00','group','G','AT&T Stadium','Dallas');
+    (es, cv, '2026-06-15 16:00:00+00','group','H','Mercedes-Benz Stadium','Atlanta'),
+    (sa, uy, '2026-06-15 22:00:00+00','group','H','Hard Rock Stadium','Miami');
 
-  -- Groep H
+  -- Groep G: 15-16 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (nl,kr,'2026-06-18 18:00:00+00','group','H','SoFi Stadium','Los Angeles'),
-    (iq,jm,'2026-06-18 21:00:00+00','group','H','Hard Rock Stadium','Miami');
+    (be, eg, '2026-06-15 19:00:00+00','group','G','Lumen Field','Seattle'),
+    (ir, nz, '2026-06-16 01:00:00+00','group','G','SoFi Stadium','Los Angeles');
 
-  -- Groep I
+  -- Groep J: 16 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (en,rs,'2026-06-19 18:00:00+00','group','I','Levi''s Stadium','San Francisco'),
-    (cr,ke,'2026-06-19 21:00:00+00','group','I','Gillette Stadium','Boston');
+    (at, jo, '2026-06-16 04:00:00+00','group','J','Levi''s Stadium','San Francisco'),
+    (fr, sn, '2026-06-16 19:00:00+00','group','I','MetLife Stadium','New York/New Jersey');
 
-  -- Groep J
+  -- Groep I: 16 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (br,no,'2026-06-20 18:00:00+00','group','J','Lincoln Financial Field','Philadelphia'),
-    (sa,cu,'2026-06-20 21:00:00+00','group','J','Arrowhead Stadium','Kansas City');
+    (iq, no, '2026-06-16 22:00:00+00','group','I','Gillette Stadium','Boston');
 
-  -- Groep K
+  -- Groep J: 17 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (fr,au,'2026-06-21 18:00:00+00','group','K','Rose Bowl','Los Angeles'),
-    (eg,gt,'2026-06-21 21:00:00+00','group','K','Estadio Azteca','Mexico-Stad');
+    (ar, dz, '2026-06-17 01:00:00+00','group','J','Arrowhead Stadium','Kansas City');
 
-  -- Groep L
+  -- Groep K: 17 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (be,at,'2026-06-22 18:00:00+00','group','L','BC Place','Vancouver'),
-    (pa,ci,'2026-06-22 21:00:00+00','group','L','BMO Field','Toronto');
+    (pt, cd, '2026-06-17 17:00:00+00','group','K','NRG Stadium','Houston'),
+    (en, hr, '2026-06-17 20:00:00+00','group','L','AT&T Stadium','Dallas');
+
+  -- Groep L: 17-18 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (gh, pa, '2026-06-17 23:00:00+00','group','L','BMO Field','Toronto'),
+    (uz, co, '2026-06-18 02:00:00+00','group','K','Estadio Azteca','Mexico-Stad');
 
   -- ============================================================
-  -- GROEPSFASE speeldag 2 (23-28 juni)
+  -- GROEPSFASE SPEELDAG 2
   -- ============================================================
 
+  -- Groep A: 18-19 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (mx,hu,'2026-06-23 18:00:00+00','group','A','Estadio Azteca','Mexico-Stad'),
-    (ec,nz,'2026-06-23 21:00:00+00','group','A','Rose Bowl','Los Angeles'),
-    (ar,ma,'2026-06-24 18:00:00+00','group','B','MetLife Stadium','New York/New Jersey'),
-    (cl,ua,'2026-06-24 21:00:00+00','group','B','AT&T Stadium','Dallas'),
-    (ca,sk,'2026-06-25 18:00:00+00','group','C','BC Place','Vancouver'),
-    (de,cm,'2026-06-25 21:00:00+00','group','C','BMO Field','Toronto'),
-    (jp,ng,'2026-06-26 18:00:00+00','group','D','SoFi Stadium','Los Angeles'),
-    (hr,pe,'2026-06-26 21:00:00+00','group','D','Hard Rock Stadium','Miami'),
-    (es,dk,'2026-06-27 18:00:00+00','group','E','Levi''s Stadium','San Francisco'),
-    (sn,uz,'2026-06-27 21:00:00+00','group','E','Gillette Stadium','Boston'),
-    (pt,ir,'2026-06-28 18:00:00+00','group','F','Lincoln Financial Field','Philadelphia'),
-    (uy,tz,'2026-06-28 21:00:00+00','group','F','Arrowhead Stadium','Kansas City');
+    (cz, za, '2026-06-18 16:00:00+00','group','A','Mercedes-Benz Stadium','Atlanta'),
+    (ca, qa, '2026-06-18 22:00:00+00','group','B','BC Place','Vancouver'),
+    (ch, ba, '2026-06-18 19:00:00+00','group','B','SoFi Stadium','Los Angeles'),
+    (mx, kr, '2026-06-19 01:00:00+00','group','A','Estadio AKRON','Guadalajara');
 
-  -- ============================================================
-  -- GROEPSFASE speeldag 3 (29 juni - 2 juli, simultaan)
-  -- ============================================================
-
+  -- Groep D: 19 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (mx,nz,'2026-06-29 21:00:00+00','group','A','Estadio Azteca','Mexico-Stad'),
-    (ec,hu,'2026-06-29 21:00:00+00','group','A','Rose Bowl','Los Angeles'),
-    (ar,ua,'2026-06-30 21:00:00+00','group','B','MetLife Stadium','New York/New Jersey'),
-    (ma,cl,'2026-06-30 21:00:00+00','group','B','AT&T Stadium','Dallas'),
-    (ca,cm,'2026-07-01 21:00:00+00','group','C','BC Place','Vancouver'),
-    (de,sk,'2026-07-01 21:00:00+00','group','C','BMO Field','Toronto'),
-    (jp,pe,'2026-07-02 18:00:00+00','group','D','SoFi Stadium','Los Angeles'),
-    (hr,ng,'2026-07-02 18:00:00+00','group','D','Hard Rock Stadium','Miami'),
-    (es,uz,'2026-07-02 21:00:00+00','group','E','Levi''s Stadium','San Francisco'),
-    (dk,sn,'2026-07-02 21:00:00+00','group','E','Gillette Stadium','Boston'),
-    (pt,tz,'2026-07-03 21:00:00+00','group','F','Lincoln Financial Field','Philadelphia'),
-    (uy,ir,'2026-07-03 21:00:00+00','group','F','Arrowhead Stadium','Kansas City'),
-    (us,ug,'2026-07-04 18:00:00+00','group','G','MetLife Stadium','New York/New Jersey'),
-    (co,tn,'2026-07-04 18:00:00+00','group','G','AT&T Stadium','Dallas'),
-    (nl,jm,'2026-07-04 21:00:00+00','group','H','SoFi Stadium','Los Angeles'),
-    (kr,iq,'2026-07-04 21:00:00+00','group','H','Hard Rock Stadium','Miami'),
-    (en,ke,'2026-07-05 18:00:00+00','group','I','Levi''s Stadium','San Francisco'),
-    (rs,cr,'2026-07-05 18:00:00+00','group','I','Gillette Stadium','Boston'),
-    (br,cu,'2026-07-05 21:00:00+00','group','J','Lincoln Financial Field','Philadelphia'),
-    (no,sa,'2026-07-05 21:00:00+00','group','J','Arrowhead Stadium','Kansas City'),
-    (fr,gt,'2026-07-06 18:00:00+00','group','K','Rose Bowl','Los Angeles'),
-    (au,eg,'2026-07-06 18:00:00+00','group','K','Estadio Azteca','Mexico-Stad'),
-    (be,ci,'2026-07-06 21:00:00+00','group','L','BC Place','Vancouver'),
-    (at,pa,'2026-07-06 21:00:00+00','group','L','BMO Field','Toronto');
+    (tr, py, '2026-06-19 04:00:00+00','group','D','Levi''s Stadium','San Francisco'),
+    (us, au, '2026-06-19 19:00:00+00','group','D','Lumen Field','Seattle');
 
-  -- Groep G/H/I/J/K/L speeldag 2 (invullen)
+  -- Groep C: 19-20 juni
   INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
-    (us,tn,'2026-06-23 18:00:00+00','group','G','MetLife Stadium','New York/New Jersey'),
-    (co,ug,'2026-06-23 21:00:00+00','group','G','AT&T Stadium','Dallas'),
-    (nl,iq,'2026-06-24 18:00:00+00','group','H','SoFi Stadium','Los Angeles'),
-    (kr,jm,'2026-06-24 21:00:00+00','group','H','Hard Rock Stadium','Miami'),
-    (en,cr,'2026-06-25 18:00:00+00','group','I','Levi''s Stadium','San Francisco'),
-    (rs,ke,'2026-06-25 21:00:00+00','group','I','Gillette Stadium','Boston'),
-    (br,sa,'2026-06-26 18:00:00+00','group','J','Lincoln Financial Field','Philadelphia'),
-    (no,cu,'2026-06-26 21:00:00+00','group','J','Arrowhead Stadium','Kansas City'),
-    (fr,eg,'2026-06-27 18:00:00+00','group','K','Rose Bowl','Los Angeles'),
-    (au,gt,'2026-06-27 21:00:00+00','group','K','Estadio Azteca','Mexico-Stad'),
-    (be,pa,'2026-06-28 18:00:00+00','group','L','BC Place','Vancouver'),
-    (at,ci,'2026-06-28 21:00:00+00','group','L','BMO Field','Toronto');
+    (sco,ma, '2026-06-19 22:00:00+00','group','C','Gillette Stadium','Boston'),
+    (br, ht, '2026-06-20 01:00:00+00','group','C','Lincoln Financial Field','Philadelphia');
+
+  -- Groep F: 20 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (tn, jp, '2026-06-20 04:00:00+00','group','F','Estadio Monterrey','Monterrey'),
+    (nl, se, '2026-06-20 17:00:00+00','group','F','NRG Stadium','Houston');
+
+  -- Groep E: 20-21 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (de, ci, '2026-06-20 20:00:00+00','group','E','BMO Field','Toronto'),
+    (ec, cw, '2026-06-21 00:00:00+00','group','E','Arrowhead Stadium','Kansas City');
+
+  -- Groep G: 21-22 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (be, ir, '2026-06-21 19:00:00+00','group','G','SoFi Stadium','Los Angeles'),
+    (nz, eg, '2026-06-22 01:00:00+00','group','G','BC Place','Vancouver');
+
+  -- Groep H: 21-22 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (es, sa, '2026-06-21 16:00:00+00','group','H','Mercedes-Benz Stadium','Atlanta'),
+    (uy, cv, '2026-06-21 22:00:00+00','group','H','Hard Rock Stadium','Miami');
+
+  -- Groep I: 22-23 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (fr, iq, '2026-06-22 21:00:00+00','group','I','Lincoln Financial Field','Philadelphia'),
+    (no, sn, '2026-06-23 00:00:00+00','group','I','MetLife Stadium','New York/New Jersey');
+
+  -- Groep J: 22-23 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (ar, at, '2026-06-22 17:00:00+00','group','J','AT&T Stadium','Dallas'),
+    (jo, dz, '2026-06-23 03:00:00+00','group','J','Levi''s Stadium','San Francisco');
+
+  -- Groep K: 23-24 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (pt, uz, '2026-06-23 17:00:00+00','group','K','NRG Stadium','Houston'),
+    (co, cd, '2026-06-24 02:00:00+00','group','K','Estadio AKRON','Guadalajara');
+
+  -- Groep L: 23-24 juni
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (en, gh, '2026-06-23 20:00:00+00','group','L','Gillette Stadium','Boston'),
+    (pa, hr, '2026-06-23 23:00:00+00','group','L','BMO Field','Toronto');
 
   -- ============================================================
-  -- KNOCKOUT FASE (placeholder-namen, teams onbekend)
+  -- GROEPSFASE SPEELDAG 3 (simultaan per groep)
   -- ============================================================
 
-  -- Ronde van 32 (4-8 juli)
+  -- Groep B: 24 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (ch, ca, '2026-06-24 19:00:00+00','group','B','BC Place','Vancouver'),
+    (ba, qa, '2026-06-24 19:00:00+00','group','B','Lumen Field','Seattle');
+
+  -- Groep A: 25 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (cz, mx, '2026-06-25 01:00:00+00','group','A','Estadio Azteca','Mexico-Stad'),
+    (za, kr, '2026-06-25 01:00:00+00','group','A','Estadio Monterrey','Monterrey');
+
+  -- Groep E: 25 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (ec, de, '2026-06-25 20:00:00+00','group','E','MetLife Stadium','New York/New Jersey'),
+    (cw, ci, '2026-06-25 20:00:00+00','group','E','Lincoln Financial Field','Philadelphia');
+
+  -- Groep F: 25-26 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (jp, se, '2026-06-25 23:00:00+00','group','F','AT&T Stadium','Dallas'),
+    (tn, nl, '2026-06-25 23:00:00+00','group','F','Arrowhead Stadium','Kansas City');
+
+  -- Groep C: 24 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (sco,br, '2026-06-24 22:00:00+00','group','C','Hard Rock Stadium','Miami'),
+    (ma, ht, '2026-06-24 22:00:00+00','group','C','Mercedes-Benz Stadium','Atlanta');
+
+  -- Groep D: 26 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (tr, us, '2026-06-26 02:00:00+00','group','D','SoFi Stadium','Los Angeles'),
+    (py, au, '2026-06-26 02:00:00+00','group','D','Levi''s Stadium','San Francisco');
+
+  -- Groep I: 26 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (no, fr, '2026-06-26 19:00:00+00','group','I','Gillette Stadium','Boston'),
+    (sn, iq, '2026-06-26 19:00:00+00','group','I','BMO Field','Toronto');
+
+  -- Groep G: 27 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (eg, ir, '2026-06-27 03:00:00+00','group','G','Lumen Field','Seattle'),
+    (nz, be, '2026-06-27 03:00:00+00','group','G','BC Place','Vancouver');
+
+  -- Groep H: 27 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (cv, sa, '2026-06-27 00:00:00+00','group','H','NRG Stadium','Houston'),
+    (uy, es, '2026-06-27 00:00:00+00','group','H','Estadio AKRON','Guadalajara');
+
+  -- Groep L: 27 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (pa, en, '2026-06-27 21:00:00+00','group','L','MetLife Stadium','New York/New Jersey'),
+    (hr, gh, '2026-06-27 21:00:00+00','group','L','Lincoln Financial Field','Philadelphia');
+
+  -- Groep K: 27-28 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (co, pt, '2026-06-27 23:30:00+00','group','K','Hard Rock Stadium','Miami'),
+    (cd, uz, '2026-06-27 23:30:00+00','group','K','Mercedes-Benz Stadium','Atlanta');
+
+  -- Groep J: 28 juni (simultaan)
+  INSERT INTO matches (home_team_id,away_team_id,"scheduledAt",phase,"group",stadium,city) VALUES
+    (dz, at, '2026-06-28 02:00:00+00','group','J','Arrowhead Stadium','Kansas City'),
+    (jo, ar, '2026-06-28 02:00:00+00','group','J','AT&T Stadium','Dallas');
+
+  -- ============================================================
+  -- KNOCKOUT FASE — Ronde van 32 (29 juni – 6 juli)
+  -- Placeholders: teams nog onbekend
+  -- ============================================================
+
   INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
-    ('1A','2B','2026-07-08 18:00:00+00','round_of_32','MetLife Stadium','New York/New Jersey'),
-    ('1B','2A','2026-07-08 21:00:00+00','round_of_32','AT&T Stadium','Dallas'),
-    ('1C','2D','2026-07-09 18:00:00+00','round_of_32','SoFi Stadium','Los Angeles'),
-    ('1D','2C','2026-07-09 21:00:00+00','round_of_32','Hard Rock Stadium','Miami'),
-    ('1E','2F','2026-07-10 18:00:00+00','round_of_32','Levi''s Stadium','San Francisco'),
-    ('1F','2E','2026-07-10 21:00:00+00','round_of_32','Gillette Stadium','Boston'),
-    ('1G','2H','2026-07-11 18:00:00+00','round_of_32','Lincoln Financial Field','Philadelphia'),
-    ('1H','2G','2026-07-11 21:00:00+00','round_of_32','Arrowhead Stadium','Kansas City'),
-    ('1I','2J','2026-07-12 18:00:00+00','round_of_32','BC Place','Vancouver'),
-    ('1J','2I','2026-07-12 21:00:00+00','round_of_32','BMO Field','Toronto'),
-    ('1K','2L','2026-07-13 18:00:00+00','round_of_32','Rose Bowl','Los Angeles'),
-    ('1L','2K','2026-07-13 21:00:00+00','round_of_32','Estadio Azteca','Mexico-Stad'),
-    ('3e plaats 1','3e plaats 2','2026-07-07 18:00:00+00','round_of_32','MetLife Stadium','New York/New Jersey'),
-    ('3e plaats 3','3e plaats 4','2026-07-07 21:00:00+00','round_of_32','AT&T Stadium','Dallas'),
-    ('3e plaats 5','3e plaats 6','2026-07-07 18:00:00+00','round_of_32','SoFi Stadium','Los Angeles'),
-    ('3e plaats 7','3e plaats 8','2026-07-07 21:00:00+00','round_of_32','Hard Rock Stadium','Miami');
+    ('1A','2B','2026-06-29 19:00:00+00','round_of_32','MetLife Stadium','New York/New Jersey'),
+    ('1B','2A','2026-06-29 22:00:00+00','round_of_32','AT&T Stadium','Dallas'),
+    ('1C','2D','2026-06-30 19:00:00+00','round_of_32','SoFi Stadium','Los Angeles'),
+    ('1D','2C','2026-06-30 22:00:00+00','round_of_32','Hard Rock Stadium','Miami'),
+    ('1E','2F','2026-07-01 19:00:00+00','round_of_32','Levi''s Stadium','San Francisco'),
+    ('1F','2E','2026-07-01 22:00:00+00','round_of_32','Gillette Stadium','Boston'),
+    ('1G','2H','2026-07-02 19:00:00+00','round_of_32','Lincoln Financial Field','Philadelphia'),
+    ('1H','2G','2026-07-02 22:00:00+00','round_of_32','Arrowhead Stadium','Kansas City'),
+    ('1I','2J','2026-07-03 19:00:00+00','round_of_32','BC Place','Vancouver'),
+    ('1J','2I','2026-07-03 22:00:00+00','round_of_32','BMO Field','Toronto'),
+    ('1K','2L','2026-07-04 19:00:00+00','round_of_32','Rose Bowl','Los Angeles'),
+    ('1L','2K','2026-07-04 22:00:00+00','round_of_32','Estadio Azteca','Mexico-Stad'),
+    ('3e best 1','3e best 2','2026-07-05 19:00:00+00','round_of_32','NRG Stadium','Houston'),
+    ('3e best 3','3e best 4','2026-07-05 22:00:00+00','round_of_32','Mercedes-Benz Stadium','Atlanta'),
+    ('3e best 5','3e best 6','2026-07-06 19:00:00+00','round_of_32','Lumen Field','Seattle'),
+    ('3e best 7','3e best 8','2026-07-06 22:00:00+00','round_of_32','Estadio Monterrey','Monterrey');
 
-  -- Achtste finales (10-12 juli)
-  INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
-    ('W49','W50','2026-07-14 18:00:00+00','round_of_16','MetLife Stadium','New York/New Jersey'),
-    ('W51','W52','2026-07-14 21:00:00+00','round_of_16','AT&T Stadium','Dallas'),
-    ('W53','W54','2026-07-15 18:00:00+00','round_of_16','SoFi Stadium','Los Angeles'),
-    ('W55','W56','2026-07-15 21:00:00+00','round_of_16','Hard Rock Stadium','Miami'),
-    ('W57','W58','2026-07-16 18:00:00+00','round_of_16','Levi''s Stadium','San Francisco'),
-    ('W59','W60','2026-07-16 21:00:00+00','round_of_16','Gillette Stadium','Boston'),
-    ('W61','W62','2026-07-17 18:00:00+00','round_of_16','Lincoln Financial Field','Philadelphia'),
-    ('W63','W64','2026-07-17 21:00:00+00','round_of_16','Arrowhead Stadium','Kansas City');
+  -- ============================================================
+  -- Achtste finales / Ronde van 16 (7–10 juli)
+  -- ============================================================
 
-  -- Kwartfinales (18-19 juli)
   INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
-    ('W65','W66','2026-07-19 18:00:00+00','quarter_final','MetLife Stadium','New York/New Jersey'),
-    ('W67','W68','2026-07-19 21:00:00+00','quarter_final','AT&T Stadium','Dallas'),
-    ('W69','W70','2026-07-20 18:00:00+00','quarter_final','SoFi Stadium','Los Angeles'),
-    ('W71','W72','2026-07-20 21:00:00+00','quarter_final','Hard Rock Stadium','Miami');
+    ('W1','W2','2026-07-07 19:00:00+00','round_of_16','MetLife Stadium','New York/New Jersey'),
+    ('W3','W4','2026-07-07 22:00:00+00','round_of_16','AT&T Stadium','Dallas'),
+    ('W5','W6','2026-07-08 19:00:00+00','round_of_16','SoFi Stadium','Los Angeles'),
+    ('W7','W8','2026-07-08 22:00:00+00','round_of_16','Hard Rock Stadium','Miami'),
+    ('W9','W10','2026-07-09 19:00:00+00','round_of_16','Levi''s Stadium','San Francisco'),
+    ('W11','W12','2026-07-09 22:00:00+00','round_of_16','Gillette Stadium','Boston'),
+    ('W13','W14','2026-07-10 19:00:00+00','round_of_16','Lincoln Financial Field','Philadelphia'),
+    ('W15','W16','2026-07-10 22:00:00+00','round_of_16','Arrowhead Stadium','Kansas City');
 
-  -- Halve finales (22-23 juli)
-  INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
-    ('W73','W74','2026-07-22 21:00:00+00','semi_final','MetLife Stadium','New York/New Jersey'),
-    ('W75','W76','2026-07-23 21:00:00+00','semi_final','Rose Bowl','Los Angeles');
+  -- ============================================================
+  -- Kwartfinales (11–12 juli)
+  -- ============================================================
 
-  -- Derde plaats (26 juli)
   INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
-    ('Verliezer HF1','Verliezer HF2','2026-07-26 20:00:00+00','third_place','Hard Rock Stadium','Miami');
+    ('W17','W18','2026-07-11 19:00:00+00','quarter_final','MetLife Stadium','New York/New Jersey'),
+    ('W19','W20','2026-07-11 22:00:00+00','quarter_final','AT&T Stadium','Dallas'),
+    ('W21','W22','2026-07-12 19:00:00+00','quarter_final','SoFi Stadium','Los Angeles'),
+    ('W23','W24','2026-07-12 22:00:00+00','quarter_final','Hard Rock Stadium','Miami');
 
-  -- Finale (19 juli — MetLife)
+  -- ============================================================
+  -- Halve finales (14–15 juli)
+  -- ============================================================
+
   INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
-    ('Winnaar HF1','Winnaar HF2','2026-07-19 20:00:00+00','final','MetLife Stadium','New York/New Jersey');
+    ('W25','W26','2026-07-14 22:00:00+00','semi_final','MetLife Stadium','New York/New Jersey'),
+    ('W27','W28','2026-07-15 22:00:00+00','semi_final','Rose Bowl','Los Angeles');
+
+  -- ============================================================
+  -- Derde-plaatswedstrijd (18 juli)
+  -- ============================================================
+
+  INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
+    ('Verliezer HF1','Verliezer HF2','2026-07-18 20:00:00+00','third_place','Hard Rock Stadium','Miami');
+
+  -- ============================================================
+  -- FINALE (19 juli — MetLife Stadium, New York/New Jersey)
+  -- ============================================================
+
+  INSERT INTO matches ("homeTeamPlaceholder","awayTeamPlaceholder","scheduledAt",phase,stadium,city) VALUES
+    ('Winnaar HF1','Winnaar HF2','2026-07-19 19:00:00+00','final','MetLife Stadium','New York/New Jersey');
 
 END $$;

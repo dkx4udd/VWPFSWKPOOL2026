@@ -34,6 +34,9 @@ export class Prediction {
   @Column({ nullable: true, type: 'int' })
   points: number | null;
 
+  @Column({ default: false })
+  isRevised: boolean;
+
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 

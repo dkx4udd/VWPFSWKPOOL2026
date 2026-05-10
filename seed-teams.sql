@@ -1,77 +1,77 @@
--- WK 2026 Teams seed
--- Bron: FIFA WK 2026 loting december 2024
+-- WK 2026 Teams seed — correcte FIFA-loting
+-- Bron: ESPN.nl / FIFA officieel speelschema
 -- 48 teams, 12 groepen (A t/m L)
 
 INSERT INTO teams ("nameNl", "nameEn", "isoCode", "flagEmoji", "group") VALUES
 
--- Groep A (speelt in Mexico)
-('Mexico', 'Mexico', 'MX', '🇲🇽', 'A'),
-('Ecuador', 'Ecuador', 'EC', '🇪🇨', 'A'),
-('Hongarije', 'Hungary', 'HU', '🇭🇺', 'A'),
-('Nieuw-Zeeland', 'New Zealand', 'NZ', '🇳🇿', 'A'),
+-- Groep A (Mexico-Stad, Guadalajara, Monterrey)
+('Mexico',        'Mexico',       'MX',  '🇲🇽', 'A'),
+('Zuid-Afrika',   'South Africa', 'ZA',  '🇿🇦', 'A'),
+('Zuid-Korea',    'South Korea',  'KR',  '🇰🇷', 'A'),
+('Tsjechië',      'Czech Republic','CZ', '🇨🇿', 'A'),
 
--- Groep B (speelt in VS)
-('Argentinië', 'Argentina', 'AR', '🇦🇷', 'B'),
-('Chili', 'Chile', 'CL', '🇨🇱', 'B'),
-('Marokko', 'Morocco', 'MA', '🇲🇦', 'B'),
-('Oekraïne', 'Ukraine', 'UA', '🇺🇦', 'B'),
+-- Groep B (Toronto, San Francisco, Los Angeles, Vancouver, Seattle)
+('Canada',               'Canada',               'CA',  '🇨🇦', 'B'),
+('Bosnië & Herzegovina', 'Bosnia & Herzegovina', 'BA',  '🇧🇦', 'B'),
+('Qatar',                'Qatar',                'QA',  '🇶🇦', 'B'),
+('Zwitserland',          'Switzerland',          'CH',  '🇨🇭', 'B'),
 
--- Groep C (speelt in Canada)
-('Canada', 'Canada', 'CA', '🇨🇦', 'C'),
-('Duitsland', 'Germany', 'DE', '🇩🇪', 'C'),
-('Slowakije', 'Slovakia', 'SK', '🇸🇰', 'C'),
-('Kameroen', 'Cameroon', 'CM', '🇨🇲', 'C'),
+-- Groep C (New York/NJ, Boston, Philadelphia, Miami, Atlanta)
+('Brazilië',  'Brazil',   'BR',  '🇧🇷',              'C'),
+('Marokko',   'Morocco',  'MA',  '🇲🇦',              'C'),
+('Haïti',     'Haiti',    'HT',  '🇭🇹',              'C'),
+('Schotland', 'Scotland', 'SCO', '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'C'),
 
--- Groep D (speelt in VS)
-('Japan', 'Japan', 'JP', '🇯🇵', 'D'),
-('Kroatië', 'Croatia', 'HR', '🇭🇷', 'D'),
-('Nigeria', 'Nigeria', 'NG', '🇳🇬', 'D'),
-('Peru', 'Peru', 'PE', '🇵🇪', 'D'),
+-- Groep D (Los Angeles, Vancouver, San Francisco, Seattle)
+('VS',         'USA',       'US',  '🇺🇸', 'D'),
+('Paraguay',   'Paraguay',  'PY',  '🇵🇾', 'D'),
+('Australië',  'Australia', 'AU',  '🇦🇺', 'D'),
+('Turkije',    'Turkey',    'TR',  '🇹🇷', 'D'),
 
--- Groep E (speelt in VS)
-('Spanje', 'Spain', 'ES', '🇪🇸', 'E'),
-('Senegal', 'Senegal', 'SN', '🇸🇳', 'E'),
-('Denemarken', 'Denmark', 'DK', '🇩🇰', 'E'),
-('Oezbekistan', 'Uzbekistan', 'UZ', '🇺🇿', 'E'),
+-- Groep E (Houston, Philadelphia, Toronto, Kansas City, New York/NJ)
+('Duitsland',  'Germany',       'DE',  '🇩🇪', 'E'),
+('Curaçao',    'Curaçao',       'CW',  '🇨🇼', 'E'),
+('Ivoorkust',  'Ivory Coast',   'CI',  '🇨🇮', 'E'),
+('Ecuador',    'Ecuador',       'EC',  '🇪🇨', 'E'),
 
--- Groep F (speelt in VS)
-('Portugal', 'Portugal', 'PT', '🇵🇹', 'F'),
-('Uruguay', 'Uruguay', 'UY', '🇺🇾', 'F'),
-('Iran', 'Iran', 'IR', '🇮🇷', 'F'),
-('Tanzania', 'Tanzania', 'TZ', '🇹🇿', 'F'),
+-- Groep F (Dallas, Monterrey, Houston, Kansas City)
+('Nederland',  'Netherlands', 'NL',  '🇳🇱', 'F'),
+('Japan',      'Japan',       'JP',  '🇯🇵', 'F'),
+('Zweden',     'Sweden',      'SE',  '🇸🇪', 'F'),
+('Tunesië',    'Tunisia',     'TN',  '🇹🇳', 'F'),
 
--- Groep G (speelt in VS/Canada)
-('VS', 'USA', 'US', '🇺🇸', 'G'),
-('Colombia', 'Colombia', 'CO', '🇨🇴', 'G'),
-('Tunesië', 'Tunisia', 'TN', '🇹🇳', 'G'),
-('Oeganda', 'Uganda', 'UG', '🇺🇬', 'G'),
+-- Groep G (Seattle, Los Angeles, Vancouver)
+('België',       'Belgium',     'BE',  '🇧🇪', 'G'),
+('Egypte',       'Egypt',       'EG',  '🇪🇬', 'G'),
+('Iran',         'Iran',        'IR',  '🇮🇷', 'G'),
+('Nieuw-Zeeland','New Zealand', 'NZ',  '🇳🇿', 'G'),
 
--- Groep H (speelt in VS)
-('Nederland', 'Netherlands', 'NL', '🇳🇱', 'H'),
-('Zuid-Korea', 'South Korea', 'KR', '🇰🇷', 'H'),
-('Irak', 'Iraq', 'IQ', '🇮🇶', 'H'),
-('Jamaica', 'Jamaica', 'JM', '🇯🇲', 'H'),
+-- Groep H (Atlanta, Miami, Houston, Guadalajara)
+('Spanje',        'Spain',        'ES',  '🇪🇸', 'H'),
+('Kaapverdië',    'Cape Verde',   'CV',  '🇨🇻', 'H'),
+('Saoedi-Arabië', 'Saudi Arabia', 'SA',  '🇸🇦', 'H'),
+('Uruguay',       'Uruguay',      'UY',  '🇺🇾', 'H'),
 
--- Groep I (speelt in VS)
-('Engeland', 'England', 'EN', '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'I'),
-('Servië', 'Serbia', 'RS', '🇷🇸', 'I'),
-('Costa Rica', 'Costa Rica', 'CR', '🇨🇷', 'I'),
-('Kenia', 'Kenya', 'KE', '🇰🇪', 'I'),
+-- Groep I (New York/NJ, Boston, Philadelphia, Toronto)
+('Frankrijk',  'France',   'FR',  '🇫🇷', 'I'),
+('Senegal',    'Senegal',  'SN',  '🇸🇳', 'I'),
+('Irak',       'Iraq',     'IQ',  '🇮🇶', 'I'),
+('Noorwegen',  'Norway',   'NO',  '🇳🇴', 'I'),
 
--- Groep J (speelt in VS)
-('Brazilië', 'Brazil', 'BR', '🇧🇷', 'J'),
-('Noorwegen', 'Norway', 'NO', '🇳🇴', 'J'),
-('Saoedi-Arabië', 'Saudi Arabia', 'SA', '🇸🇦', 'J'),
-('Cuba', 'Cuba', 'CU', '🇨🇺', 'J'),
+-- Groep J (San Francisco, Kansas City, Dallas)
+('Argentinië',  'Argentina', 'AR',  '🇦🇷', 'J'),
+('Algerije',    'Algeria',   'DZ',  '🇩🇿', 'J'),
+('Oostenrijk',  'Austria',   'AT',  '🇦🇹', 'J'),
+('Jordanië',    'Jordan',    'JO',  '🇯🇴', 'J'),
 
--- Groep K (speelt in VS/Mexico)
-('Frankrijk', 'France', 'FR', '🇫🇷', 'K'),
-('Australië', 'Australia', 'AU', '🇦🇺', 'K'),
-('Egypte', 'Egypt', 'EG', '🇪🇬', 'K'),
-('Guatemala', 'Guatemala', 'GT', '🇬🇹', 'K'),
+-- Groep K (Houston, Mexico-Stad, Guadalajara, Miami, Atlanta)
+('Portugal',   'Portugal',          'PT',  '🇵🇹', 'K'),
+('Congo DR',   'DR Congo',          'CD',  '🇨🇩', 'K'),
+('Oezbekistan','Uzbekistan',        'UZ',  '🇺🇿', 'K'),
+('Colombia',   'Colombia',          'CO',  '🇨🇴', 'K'),
 
--- Groep L (speelt in VS/Mexico)
-('België', 'Belgium', 'BE', '🇧🇪', 'L'),
-('Oostenrijk', 'Austria', 'AT', '🇦🇹', 'L'),
-('Panama', 'Panama', 'PA', '🇵🇦', 'L'),
-('Ivoorkust', 'Ivory Coast', 'CI', '🇨🇮', 'L');
+-- Groep L (Dallas, Toronto, Boston, New York/NJ, Philadelphia)
+('Engeland',  'England',  'EN',  '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'L'),
+('Kroatië',   'Croatia',  'HR',  '🇭🇷',              'L'),
+('Ghana',     'Ghana',    'GH',  '🇬🇭',              'L'),
+('Panama',    'Panama',   'PA',  '🇵🇦',              'L');

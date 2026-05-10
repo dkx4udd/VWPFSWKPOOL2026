@@ -17,8 +17,11 @@ export class Team {
   @Column({ unique: true })
   nameEn: string;
 
-  @Column({ length: 2, unique: true })
+  @Column({ length: 3, unique: true })
   isoCode: string;
+
+  @Column({ nullable: true, type: 'int' })
+  fifaRank: number | null;
 
   @Column({ nullable: true, type: 'text' })
   flagEmoji: string | null;

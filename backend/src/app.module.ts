@@ -8,6 +8,7 @@ import { MatchesModule } from './modules/matches/matches.module';
 import { PredictionsModule } from './modules/predictions/predictions.module';
 import { RankingsModule } from './modules/rankings/rankings.module';
 import { BonusPredictionsModule } from './modules/bonus-predictions/bonus-predictions.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { BonusPredictionsModule } from './modules/bonus-predictions/bonus-predic
     PredictionsModule,
     RankingsModule,
     BonusPredictionsModule,
+    AdminModule,
   ],
 })
 export class AppModule {}

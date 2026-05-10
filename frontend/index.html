@@ -135,6 +135,97 @@
       ['wk_token', 'wk_refresh_token', 'wk_user'].forEach(k => localStorage.removeItem(k));
     }
 
+    function prizesHtml() {
+      return `
+        <div class="px-4 max-w-2xl mx-auto mb-16">
+          <h3 class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4 text-center">Prijzenpodium</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+            <!-- 1e prijs -->
+            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(71,0,176,0.08)] flex flex-col">
+              <div class="relative">
+                <img src="/prize-1-fiets.png" alt="Gazelle Elektrische Fiets" class="w-full h-48 sm:h-40 object-cover">
+                <div class="absolute top-3 left-3 prize-gold w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg">1</div>
+              </div>
+              <div class="p-4 flex flex-col flex-1">
+                <div class="font-black text-base text-on-surface leading-tight">Gazelle Elektrische Fiets</div>
+                <div class="text-primary font-bold text-sm mt-0.5">t.w.v. € 2.999,-</div>
+                <div class="mt-auto pt-3 flex items-center gap-2 border-t border-outline-variant">
+                  <img src="/prize-1-logo.jpg" alt="Gazelle" class="h-6 w-auto object-contain rounded">
+                  <span class="text-[11px] text-on-surface-variant">Gesponsord door <strong>Gazelle</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2e prijs -->
+            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(71,0,176,0.08)] flex flex-col">
+              <div class="relative">
+                <img src="/prize-2-cabrio.jpg" alt="Weekend Cabrio" class="w-full h-48 sm:h-40 object-cover">
+                <div class="absolute top-3 left-3 prize-silver w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg">2</div>
+              </div>
+              <div class="p-4 flex flex-col flex-1">
+                <div class="font-black text-base text-on-surface leading-tight">Weekend Cabrio Rijden</div>
+                <div class="text-on-surface-variant text-sm mt-0.5">Een heel weekend genieten</div>
+                <div class="mt-auto pt-3 flex items-center gap-2 border-t border-outline-variant">
+                  <span class="material-symbols-outlined ms-filled text-secondary" style="font-size:20px">directions_car</span>
+                  <span class="text-[11px] text-on-surface-variant">Gesponsord door <a href="https://www.easyrent.nl" target="_blank" class="font-bold text-secondary hover:underline">easyrent.nl</a></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3e prijs -->
+            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(71,0,176,0.08)] flex flex-col">
+              <div class="relative">
+                <img src="/prize-3-salentijn.jpg" alt="Uit eten bij Salentijn" class="w-full h-48 sm:h-40 object-cover">
+                <div class="absolute top-3 left-3 prize-bronze w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg">3</div>
+              </div>
+              <div class="p-4 flex flex-col flex-1">
+                <div class="font-black text-base text-on-surface leading-tight">Uit Eten bij Salentijn</div>
+                <div class="text-on-surface-variant text-sm mt-0.5">Genieten van een heerlijk diner</div>
+                <div class="mt-auto pt-3 flex items-center gap-2 border-t border-outline-variant">
+                  <img src="/prize-3-landgoed.png" alt="Salentijn" class="h-6 w-auto object-contain">
+                  <span class="text-[11px] text-on-surface-variant">Gesponsord door <strong>VWPFS</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4e prijs -->
+            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(71,0,176,0.08)] flex flex-col">
+              <div class="relative">
+                <img src="/prize-4-deepclean.jpg" alt="Auto Deepclean" class="w-full h-48 sm:h-40 object-cover">
+                <div class="absolute top-3 left-3 bg-blue-500 w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg">4</div>
+              </div>
+              <div class="p-4 flex flex-col flex-1">
+                <div class="font-black text-base text-on-surface leading-tight">Auto Deepclean</div>
+                <div class="text-primary font-bold text-sm mt-0.5">t.w.v. € 250,-</div>
+                <div class="text-on-surface-variant text-xs mt-0.5">Binnen én buiten tot in de puntjes</div>
+                <div class="mt-auto pt-3 flex items-center gap-2 border-t border-outline-variant">
+                  <span class="material-symbols-outlined ms-filled text-blue-500" style="font-size:18px">directions_car</span>
+                  <span class="text-[11px] text-on-surface-variant">Gesponsord door <strong>Dutchlease</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5e prijs -->
+            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(71,0,176,0.08)] flex flex-col">
+              <div class="relative">
+                <img src="/prize-5-hotel.jpg" alt="Hotelovernachting" class="w-full h-48 sm:h-40 object-cover">
+                <div class="absolute top-3 left-3 bg-violet-500 w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg">5</div>
+              </div>
+              <div class="p-4 flex flex-col flex-1">
+                <div class="font-black text-base text-on-surface leading-tight">Hotelovernachting in NL</div>
+                <div class="text-on-surface-variant text-sm mt-0.5">Naar keuze, een hotel naar smaak</div>
+                <div class="mt-auto pt-3 flex items-center gap-2 border-t border-outline-variant">
+                  <span class="material-symbols-outlined ms-filled text-violet-500" style="font-size:18px">bed</span>
+                  <span class="text-[11px] text-on-surface-variant">Gesponsord door <strong>XLlease</strong></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>`;
+    }
+
     function teamName(match, side) {
       const team = match[`${side}Team`];
       if (team) return team.nameNl || team.nameEn;
@@ -219,33 +310,7 @@
           </div>
         </div>
 
-        <!-- Prijzen -->
-        <div class="px-4 max-w-2xl mx-auto mb-16">
-          <h3 class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4">Prijzenpodium</h3>
-          <div class="space-y-3">
-            <div class="flex items-center gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
-              <div class="prize-gold w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md flex-shrink-0">1</div>
-              <div>
-                <div class="font-bold text-on-surface">Winnaar</div>
-                <div class="text-sm text-on-surface-variant">Eeuwige roem + beker</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
-              <div class="prize-silver w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md flex-shrink-0">2</div>
-              <div>
-                <div class="font-bold text-on-surface">Runner-up</div>
-                <div class="text-sm text-on-surface-variant">Tweede prijs</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
-              <div class="prize-bronze w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md flex-shrink-0">3</div>
-              <div>
-                <div class="font-bold text-on-surface">Derde prijs</div>
-                <div class="text-sm text-on-surface-variant">Derde prijs</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        ${prizesHtml()}
       `;
     }
 
@@ -270,7 +335,7 @@
               <div class="text-xs text-on-surface-variant font-medium mt-1">Wedstrijden</div>
             </div>
             <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
-              <div class="text-2xl font-black text-primary">3pts</div>
+              <div class="text-2xl font-black text-primary">10pts</div>
               <div class="text-xs text-on-surface-variant font-medium mt-1">Per exacte uitslag</div>
             </div>
             <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
@@ -279,6 +344,7 @@
             </div>
           </div>
         </div>
+        ${prizesHtml()}
       `;
     }
 

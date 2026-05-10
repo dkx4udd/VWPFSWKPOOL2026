@@ -39,7 +39,7 @@ export class AuthService {
   async login(dto: LoginDto) {
     const user = await this.userRepo.findOne({
       where: { email: dto.email },
-      select: ['id', 'email', 'passwordHash', 'role', 'status', 'totpEnabled', 'totpSecret'],
+      select: ['id', 'email', 'passwordHash', 'firstName', 'lastName', 'role', 'status', 'totpEnabled', 'totpSecret'],
     });
 
     if (!user || !user.passwordHash) throw new UnauthorizedException('Invalid credentials');
@@ -84,7 +84,7 @@ export class AuthService {
         secret: this.config.get('JWT_REFRESH_SECRET') as string,
         expiresIn: (this.config.get('JWT_REFRESH_EXPIRES_IN') ?? '7d') as any,
       }),
-      user: { id: user.id, email: user.email, role: user.role, status: user.status },
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role, status: user.status },
     };
   }
 }

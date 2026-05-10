@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — WK Pool 2026</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+    .ms-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+    .host-city-pattern {
+      background-image: radial-gradient(circle at 2px 2px, rgba(110, 36, 246, 0.05) 1px, transparent 0);
+      background-size: 16px 16px;
+    }
+    .btn-gradient { background: linear-gradient(135deg, #6200eb, #4700b0); }
+    .btn-gradient:hover { background: linear-gradient(135deg, #5400cc, #3d0094); }
+    .score-input { -moz-appearance: textfield; }
+    .score-input::-webkit-outer-spin-button,
+    .score-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .tab-active { border-bottom: 3px solid #4700b0; color: #4700b0; font-weight: 700; }
+    .filter-pill.active { background: #4700b0; color: #fff; }
+    .filter-pill:not(.active) { background: #eeeeee; color: #494456; }
+    .status-scheduled { background: #eeeeee; color: #494456; }
+    .status-live { background: #fee2e2; color: #b91c1c; }
+    .status-finished { background: #dcfce7; color: #166534; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#f3f3f4",
+            "on-surface-variant": "#494456",
+            "background": "#f9f9f9",
+            "primary": "#4700b0",
+            "outline-variant": "#cbc3d9",
+            "secondary": "#006874",
+            "surface-container": "#eeeeee",
+            "on-surface": "#1a1c1c",
+            "surface-container-high": "#e8e8e8",
+            "outline": "#7b7488",
+            "surface-container-highest": "#e2e2e2",
+            "error": "#ba1a1a",
+          },
+          fontFamily: { sans: ["Lexend", "sans-serif"] },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-sans min-h-screen host-city-pattern">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center px-4 h-16 w-full z-50 bg-primary border-b border-primary sticky top-0">
+    <div class="flex items-center gap-3">
+      <div class="bg-white/20 p-2 rounded-lg">
+        <span class="material-symbols-outlined ms-filled text-white" style="font-size:22px">admin_panel_settings</span>
+      </div>
+      <div>
+        <div class="text-[9px] font-bold tracking-[0.2em] text-white/70 uppercase">Beheer</div>
+        <div class="text-base font-black text-white leading-none">WK Pool Admin</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="admin-name" class="text-xs text-white/80 font-medium"></span>
+      <a href="index.html" class="text-xs font-semibold text-white/80 hover:text-white flex items-center gap-1">
+        <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+        Terug
+      </a>
+    </div>
+  </header>
+
+  <!-- Stats bar -->
+  <div class="bg-surface-container-lowest border-b border-outline-variant">
+    <div id="stats-bar" class="max-w-5xl mx-auto px-4 py-3 grid grid-cols-3 gap-3 sm:grid-cols-6">
+      <div class="animate-pulse h-10 bg-surface-container-highest rounded-xl col-span-3 sm:col-span-6"></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-surface-container-lowest border-b border-outline-variant sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 flex gap-6">
+      <button onclick="showTab('matches')" id="tab-matches"
+        class="py-3 text-sm font-semibold text-on-surface-variant tab-active border-b-3 transition-colors">
+        Wedstrijden
+      </button>
+      <button onclick="showTab('users')" id="tab-users"
+        class="py-3 text-sm font-semibold text-on-surface-variant transition-colors">
+        Gebruikers
+      </button>
+    </div>
+  </div>
+
+  <!-- Matches tab -->
+  <div id="view-matches" class="max-w-5xl mx-auto px-4 pt-4 pb-24">
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex gap-1.5 flex-wrap">
+        <button class="filter-pill active text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('all', this)">Alles</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('group', this)">Groep</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('round_of_32', this)">R32</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('round_of_16', this)">R16</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('quarter_final', this)">KF</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('semi_final', this)">HF</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setPhase('final', this)">Finale</button>
+      </div>
+      <div class="flex gap-1.5 ml-auto flex-wrap">
+        <button class="filter-pill active text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setStatus('all', this)" id="sf-all">Alle</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setStatus('scheduled', this)">Gepland</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setStatus('live', this)">Live</button>
+        <button class="filter-pill text-xs font-bold px-3 py-1.5 rounded-full transition-all" onclick="setStatus('finished', this)">Gespeeld</button>
+      </div>
+    </div>
+
+    <!-- Settle-all action -->
+    <div class="flex items-center justify-between mb-4 bg-surface-container-lowest rounded-xl px-4 py-2.5 shadow-[0_2px_8px_rgba(71,0,176,0.06)] border border-outline-variant">
+      <span class="text-xs text-on-surface-variant font-medium">Alle gespeelde wedstrijden punten berekenen</span>
+      <button onclick="settleAll()" class="btn-gradient text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition-all active:scale-[0.98]">
+        Bereken alles
+      </button>
+    </div>
+
+    <div id="match-table">
+      <div class="space-y-2 animate-pulse">
+        <div class="h-16 bg-surface-container-highest rounded-xl"></div>
+        <div class="h-16 bg-surface-container-highest rounded-xl"></div>
+        <div class="h-16 bg-surface-container-highest rounded-xl"></div>
+        <div class="h-16 bg-surface-container-highest rounded-xl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users tab -->
+  <div id="view-users" class="hidden max-w-5xl mx-auto px-4 pt-4 pb-24">
+    <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4 flex items-start gap-2">
+      <span class="material-symbols-outlined text-amber-600 flex-shrink-0 mt-0.5" style="font-size:18px">info</span>
+      <p class="text-xs text-amber-800">Eerste admin instellen? Voer uit in de database:<br>
+        <code class="font-mono bg-amber-100 px-1 rounded text-[11px]">UPDATE users SET role='admin' WHERE email='jouw@email.nl';</code>
+      </p>
+    </div>
+    <div id="users-list">
+      <div class="space-y-2 animate-pulse">
+        <div class="h-14 bg-surface-container-highest rounded-xl"></div>
+        <div class="h-14 bg-surface-container-highest rounded-xl"></div>
+        <div class="h-14 bg-surface-container-highest rounded-xl"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3003/api/v1'
+      : `${window.location.protocol}//${window.location.host}/api/v1`;
+
+    // Auth check
+    const token = localStorage.getItem('wk_token');
+    const currentUser = (() => { try { return JSON.parse(localStorage.getItem('wk_user') || 'null'); } catch { return null; } })();
+    if (!token) window.location.href = 'login.html';
+    if (currentUser?.role !== 'admin') {
+      document.body.innerHTML = `
+        <div class="flex flex-col items-center justify-center min-h-screen gap-4">
+          <span class="material-symbols-outlined text-error" style="font-size:64px">lock</span>
+          <p class="text-lg font-bold">Geen toegang</p>
+          <p class="text-on-surface-variant text-sm">Je hebt geen adminrechten.</p>
+          <a href="index.html" class="text-primary font-semibold text-sm">Terug naar home</a>
+        </div>`;
+    } else {
+      const displayName = (currentUser.firstName && currentUser.lastName)
+        ? `${currentUser.firstName} ${currentUser.lastName}`
+        : currentUser.email || '';
+      document.getElementById('admin-name').textContent = displayName;
+      // Refresh name from API in case localStorage is stale
+      apiFetch('/auth/me').then(r => r.ok ? r.json() : null).then(me => {
+        if (me?.firstName) document.getElementById('admin-name').textContent = `${me.firstName} ${me.lastName}`;
+      }).catch(() => {});
+    }
+
+    const PHASE_LABELS = {
+      group: 'Groepsfase', round_of_32: 'R32', round_of_16: 'R16',
+      quarter_final: 'KF', semi_final: 'HF', third_place: '3e Plaats', final: 'Finale'
+    };
+    const STATUS_LABELS = { scheduled: 'Gepland', live: 'Live', finished: 'Gespeeld', postponed: 'Uitgesteld' };
+
+    let allMatches = [];
+    let phaseFilter = 'all';
+    let statusFilter = 'all';
+    let activeTab = 'matches';
+
+    async function apiFetch(path, opts = {}) {
+      const res = await fetch(API_BASE + path, {
+        ...opts,
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
+      });
+      if (res.status === 401) { window.location.href = 'login.html'; }
+      if (res.status === 403) {
+        alert('Geen adminrechten. Vraag een beheerder om je rol aan te passen.');
+        window.location.href = 'index.html';
+      }
+      return res;
+    }
+
+    // ── Tabs ──────────────────────────────────────────────────────────────────
+    function showTab(tab) {
+      activeTab = tab;
+      document.getElementById('view-matches').classList.toggle('hidden', tab !== 'matches');
+      document.getElementById('view-users').classList.toggle('hidden', tab !== 'users');
+      document.getElementById('tab-matches').className = `py-3 text-sm font-semibold transition-colors ${tab === 'matches' ? 'text-primary tab-active' : 'text-on-surface-variant'}`;
+      document.getElementById('tab-users').className = `py-3 text-sm font-semibold transition-colors ${tab === 'users' ? 'text-primary tab-active' : 'text-on-surface-variant'}`;
+      if (tab === 'users') loadUsers();
+    }
+
+    // ── Stats ─────────────────────────────────────────────────────────────────
+    async function loadStats() {
+      const res = await apiFetch('/admin/stats');
+      if (!res.ok) return;
+      const s = await res.json();
+      document.getElementById('stats-bar').innerHTML = `
+        ${statChip('sports_soccer', s.totalMatches, 'wedstrijden')}
+        ${statChip('check_circle', s.finishedMatches, 'gespeeld')}
+        ${statChip('sensors', s.liveMatches, 'live', s.liveMatches > 0 ? 'text-error' : '')}
+        ${statChip('edit', s.totalPredictions, 'voorspellingen')}
+        ${statChip('leaderboard', s.settledPredictions, 'berekend')}
+        ${statChip('group', s.totalUsers, 'spelers')}`;
+    }
+
+    function statChip(icon, value, label, colorClass = 'text-primary') {
+      return `
+        <div class="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-surface-container-low">
+          <span class="material-symbols-outlined ms-filled ${colorClass}" style="font-size:18px">${icon}</span>
+          <span class="text-base font-black text-on-surface leading-none">${value}</span>
+          <span class="text-[9px] text-on-surface-variant font-medium uppercase tracking-wide">${label}</span>
+        </div>`;
+    }
+
+    // ── Matches ───────────────────────────────────────────────────────────────
+    function setPhase(phase, btn) {
+      phaseFilter = phase;
+      document.querySelectorAll('.filter-pill').forEach(p => {
+        if (['all','group','round_of_32','round_of_16','quarter_final','semi_final','final'].includes(p.textContent.trim()) ||
+            ['Alles','Groep','R32','R16','KF','HF','Finale'].includes(p.textContent.trim()))
+          p.classList.remove('active');
+      });
+      btn.classList.add('active');
+      renderMatches();
+    }
+
+    function setStatus(status, btn) {
+      statusFilter = status;
+      document.querySelectorAll('.filter-pill').forEach(p => {
+        if (['Alle','Gepland','Live','Gespeeld'].includes(p.textContent.trim()))
+          p.classList.remove('active');
+      });
+      btn.classList.add('active');
+      renderMatches();
+    }
+
+    async function loadMatches() {
+      const res = await apiFetch('/admin/matches');
+      if (!res.ok) return;
+      allMatches = await res.json();
+      renderMatches();
+    }
+
+    function renderMatches() {
+      let filtered = allMatches;
+      if (phaseFilter !== 'all') filtered = filtered.filter(m => m.phase === phaseFilter);
+      if (statusFilter !== 'all') filtered = filtered.filter(m => m.status === statusFilter);
+
+      if (filtered.length === 0) {
+        document.getElementById('match-table').innerHTML = `
+          <div class="text-center py-10 text-on-surface-variant text-sm">Geen wedstrijden gevonden</div>`;
+        return;
+      }
+
+      // Group by phase
+      const phaseOrder = ['group','round_of_32','round_of_16','quarter_final','semi_final','third_place','final'];
+      const grouped = {};
+      for (const m of filtered) {
+        if (!grouped[m.phase]) grouped[m.phase] = [];
+        grouped[m.phase].push(m);
+      }
+
+      const html = phaseOrder.filter(p => grouped[p]).map(phase => `
+        <div class="mb-4">
+          <h3 class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase mb-2 flex items-center gap-2">
+            <span class="w-1 h-3 bg-primary rounded-full inline-block"></span>
+            ${PHASE_LABELS[phase]}
+          </h3>
+          <div class="space-y-1.5">${grouped[phase].map(renderMatchRow).join('')}</div>
+        </div>`).join('');
+
+      document.getElementById('match-table').innerHTML = html;
+    }
+
+    function renderMatchRow(match) {
+      const homeName = match.homeTeam?.nameNl || match.homeTeamPlaceholder || '?';
+      const awayName = match.awayTeam?.nameNl || match.awayTeamPlaceholder || '?';
+      const homeIso = match.homeTeam?.isoCode?.toLowerCase();
+      const awayIso = match.awayTeam?.isoCode?.toLowerCase();
+      const homeFlag = homeIso ? `<img src="https://flagcdn.com/w40/${homeIso}.png" class="w-6 h-4 object-cover rounded" alt="">` : '<span class="material-symbols-outlined text-outline" style="font-size:16px">flag</span>';
+      const awayFlag = awayIso ? `<img src="https://flagcdn.com/w40/${awayIso}.png" class="w-6 h-4 object-cover rounded" alt="">` : '<span class="material-symbols-outlined text-outline" style="font-size:16px">flag</span>';
+
+      const statusClass = { scheduled: 'status-scheduled', live: 'status-live', finished: 'status-finished' }[match.status] || 'status-scheduled';
+      const date = new Date(match.scheduledAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+      const homeVal = match.homeScore !== null && match.homeScore !== undefined ? match.homeScore : '';
+      const awayVal = match.awayScore !== null && match.awayScore !== undefined ? match.awayScore : '';
+
+      const isSettled = match.status === 'finished' && match.homeScore !== null;
+
+      return `
+        <div class="bg-surface-container-lowest rounded-xl px-4 py-3 shadow-[0_1px_4px_rgba(71,0,176,0.06)] border border-outline-variant/50">
+          <div class="flex items-center gap-3 flex-wrap">
+
+            <!-- Teams -->
+            <div class="flex items-center gap-2 flex-1 min-w-[180px]">
+              <div class="flex items-center gap-1.5 min-w-0">
+                ${homeFlag}
+                <span class="text-xs font-semibold text-on-surface truncate max-w-[70px]">${homeName}</span>
+              </div>
+              <span class="text-[10px] text-on-surface-variant font-bold flex-shrink-0">vs</span>
+              <div class="flex items-center gap-1.5 min-w-0">
+                ${awayFlag}
+                <span class="text-xs font-semibold text-on-surface truncate max-w-[70px]">${awayName}</span>
+              </div>
+            </div>
+
+            <!-- Meta -->
+            <div class="flex flex-col items-start gap-0.5 min-w-[90px]">
+              <span class="text-[10px] text-on-surface-variant">${date}</span>
+              ${match.group ? `<span class="text-[10px] font-bold text-primary">Groep ${match.group}</span>` : ''}
+              <span class="text-[10px] text-outline">${match.predictionCount} voorspellingen</span>
+            </div>
+
+            <!-- Status selector -->
+            <select id="status-${match.id}" onchange="onStatusChange('${match.id}')"
+              class="text-xs font-bold px-2 py-1.5 rounded-lg border border-outline-variant ${statusClass} focus:outline-none cursor-pointer">
+              <option value="scheduled" ${match.status === 'scheduled' ? 'selected' : ''}>Gepland</option>
+              <option value="live" ${match.status === 'live' ? 'selected' : ''}>Live</option>
+              <option value="finished" ${match.status === 'finished' ? 'selected' : ''}>Gespeeld</option>
+            </select>
+
+            <!-- Score inputs -->
+            <div class="flex items-center gap-1.5">
+              <input type="number" id="home-${match.id}" min="0" max="99" value="${homeVal}"
+                class="score-input w-10 h-9 text-center text-sm font-black rounded-lg border-2 border-outline-variant bg-surface-container-low focus:border-primary outline-none transition-colors"
+                placeholder="–">
+              <span class="text-on-surface-variant font-bold text-sm">–</span>
+              <input type="number" id="away-${match.id}" min="0" max="99" value="${awayVal}"
+                class="score-input w-10 h-9 text-center text-sm font-black rounded-lg border-2 border-outline-variant bg-surface-container-low focus:border-primary outline-none transition-colors"
+                placeholder="–">
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex items-center gap-2">
+              <button id="save-${match.id}" onclick="saveMatch('${match.id}')"
+                class="btn-gradient text-white text-xs font-bold px-3 py-2 rounded-lg shadow-sm transition-all active:scale-[0.98]">
+                Opslaan
+              </button>
+              <button id="settle-${match.id}" onclick="settleMatch('${match.id}')"
+                class="text-xs font-bold px-3 py-2 rounded-lg border-2 border-secondary text-secondary hover:bg-secondary hover:text-white transition-all active:scale-[0.98] ${!isSettled ? 'opacity-40' : ''}">
+                Punten
+              </button>
+            </div>
+
+            <!-- Feedback msg -->
+            <div id="msg-${match.id}" class="hidden text-xs font-semibold w-full mt-1"></div>
+          </div>
+        </div>`;
+    }
+
+    function onStatusChange(matchId) {
+      const status = document.getElementById(`status-${matchId}`).value;
+      const sel = document.getElementById(`status-${matchId}`);
+      sel.className = sel.className.replace(/status-\w+/, `status-${status}`);
+    }
+
+    async function saveMatch(matchId) {
+      const btn = document.getElementById(`save-${matchId}`);
+      const msg = document.getElementById(`msg-${matchId}`);
+      const status = document.getElementById(`status-${matchId}`).value;
+      const homeVal = document.getElementById(`home-${matchId}`).value;
+      const awayVal = document.getElementById(`away-${matchId}`).value;
+
+      const body = { status };
+      if (homeVal !== '') body.homeScore = parseInt(homeVal);
+      if (awayVal !== '') body.awayScore = parseInt(awayVal);
+
+      btn.disabled = true;
+      btn.textContent = '...';
+      msg.classList.add('hidden');
+
+      try {
+        const res = await apiFetch(`/admin/matches/${matchId}`, {
+          method: 'PATCH',
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Opslaan mislukt');
+
+        // Update local data
+        const idx = allMatches.findIndex(m => m.id === matchId);
+        if (idx >= 0) {
+          allMatches[idx] = { ...allMatches[idx], ...data, predictionCount: allMatches[idx].predictionCount };
+        }
+
+        btn.textContent = '✓';
+        btn.style.background = '#006874';
+        msg.textContent = 'Opgeslagen';
+        msg.className = 'text-xs font-semibold w-full mt-1 text-secondary';
+        msg.classList.remove('hidden');
+
+        // Enable settle button if finished + score
+        if (status === 'finished' && homeVal !== '' && awayVal !== '') {
+          const settleBtn = document.getElementById(`settle-${matchId}`);
+          if (settleBtn) settleBtn.classList.remove('opacity-40');
+        }
+
+        setTimeout(() => { msg.classList.add('hidden'); btn.textContent = 'Opslaan'; btn.style.background = ''; btn.disabled = false; }, 2000);
+        loadStats();
+      } catch (err) {
+        msg.textContent = err.message;
+        msg.className = 'text-xs font-semibold w-full mt-1 text-error';
+        msg.classList.remove('hidden');
+        btn.textContent = 'Opslaan';
+        btn.disabled = false;
+      }
+    }
+
+    async function settleMatch(matchId) {
+      const btn = document.getElementById(`settle-${matchId}`);
+      const msg = document.getElementById(`msg-${matchId}`);
+      btn.disabled = true;
+      btn.textContent = '...';
+
+      try {
+        const res = await apiFetch(`/admin/matches/${matchId}/settle`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Berekening mislukt');
+
+        msg.textContent = `✓ ${data.settled} voorspellingen berekend`;
+        msg.className = 'text-xs font-semibold w-full mt-1 text-secondary';
+        msg.classList.remove('hidden');
+        btn.textContent = '✓ Punten';
+        btn.className = btn.className.replace('border-secondary text-secondary', 'border-green-600 text-green-600');
+        setTimeout(() => { msg.classList.add('hidden'); btn.textContent = 'Punten'; btn.disabled = false; }, 3000);
+        loadStats();
+      } catch (err) {
+        msg.textContent = err.message;
+        msg.className = 'text-xs font-semibold w-full mt-1 text-error';
+        msg.classList.remove('hidden');
+        btn.textContent = 'Punten';
+        btn.disabled = false;
+      }
+    }
+
+    async function settleAll() {
+      if (!confirm('Punten berekenen voor alle gespeelde wedstrijden?')) return;
+      try {
+        const res = await apiFetch('/admin/matches/settle-all', { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Mislukt');
+        alert(`✓ ${data.settled} voorspellingen bijgewerkt`);
+        loadStats();
+        loadMatches();
+      } catch (err) {
+        alert('Fout: ' + err.message);
+      }
+    }
+
+    // ── Users ─────────────────────────────────────────────────────────────────
+    async function loadUsers() {
+      const res = await apiFetch('/admin/users');
+      if (!res.ok) return;
+      const users = await res.json();
+
+      const rows = users.map(u => {
+        const isAdmin = u.role === 'admin';
+        const date = new Date(u.createdAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `
+          <div class="bg-surface-container-lowest rounded-xl px-4 py-3 shadow-[0_1px_4px_rgba(71,0,176,0.06)] border border-outline-variant/50 flex items-center gap-3 flex-wrap">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-black flex-shrink-0"
+              style="background: ${isAdmin ? '#4700b0' : '#006874'}">
+              ${(u.firstName?.[0] || '?')}${(u.lastName?.[0] || '')}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold text-sm text-on-surface">${u.firstName} ${u.lastName}</div>
+              <div class="text-xs text-on-surface-variant truncate">${u.email} · ${date}</div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-1 rounded-full ${isAdmin ? 'bg-primary/10 text-primary' : 'bg-surface-container text-on-surface-variant'}">
+              ${isAdmin ? 'Admin' : 'Speler'}
+            </span>
+            <button onclick="toggleRole('${u.id}', '${u.role}', this)"
+              class="text-xs font-bold px-3 py-1.5 rounded-lg border-2 ${isAdmin ? 'border-error text-error hover:bg-error hover:text-white' : 'border-primary text-primary hover:bg-primary hover:text-white'} transition-all">
+              ${isAdmin ? 'Maak speler' : 'Maak admin'}
+            </button>
+          </div>`;
+      }).join('');
+
+      document.getElementById('users-list').innerHTML = `<div class="space-y-2">${rows}</div>`;
+    }
+
+    async function toggleRole(userId, currentRole, btn) {
+      const newRole = currentRole === 'admin' ? 'player' : 'admin';
+      if (!confirm(`Rol wijzigen naar "${newRole}"?`)) return;
+      btn.disabled = true;
+      try {
+        const res = await apiFetch(`/admin/users/${userId}/role`, {
+          method: 'PATCH',
+          body: JSON.stringify({ role: newRole }),
+        });
+        if (!res.ok) throw new Error('Wijzigen mislukt');
+        loadUsers();
+        loadStats();
+      } catch (err) {
+        alert('Fout: ' + err.message);
+        btn.disabled = false;
+      }
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    if (currentUser?.role === 'admin') {
+      loadStats();
+      loadMatches();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[Unit]
+Description=WK Pool 2026 Backend (NestJS)
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=renetheuns
+WorkingDirectory=/home/renetheuns/VWPFSWKPOOL2026/backend
+ExecStart=/usr/bin/node dist/main.js
+EnvironmentFile=/home/renetheuns/VWPFSWKPOOL2026/.env.staging
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=wkpool
+
+[Install]
+WantedBy=multi-user.target

@@ -17,6 +17,16 @@ export class PredictionsController {
     return this.predictionsService.findForUser(user.id);
   }
 
+  @Get('stats')
+  stats() {
+    return this.predictionsService.getStats();
+  }
+
+  @Get('ai')
+  aiPredictions() {
+    return this.predictionsService.getAiPredictions();
+  }
+
   @Post('match/:matchId')
   upsert(
     @CurrentUser() user: { id: string },
@@ -24,6 +34,15 @@ export class PredictionsController {
     @Body() dto: UpsertPredictionDto,
   ) {
     return this.predictionsService.upsert(user.id, matchId, dto);
+  }
+
+  @Post('match/:matchId/revise')
+  revise(
+    @CurrentUser() user: { id: string },
+    @Param('matchId') matchId: string,
+    @Body() dto: UpsertPredictionDto,
+  ) {
+    return this.predictionsService.revise(user.id, matchId, dto);
   }
 
   @Post('match/:matchId/settle')
