@@ -124,10 +124,12 @@
 
     const openDropdowns = new Set();
     const loadedDropdowns = new Map();
-    let lang = 'nl';
+    let lang = localStorage.getItem('wk_lang') || 'nl';
+    document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
 
     function toggleLang() {
       lang = lang === 'nl' ? 'en' : 'nl';
+      localStorage.setItem('wk_lang', lang);
       document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
       // Re-render open dropdowns with new language
       for (const userId of openDropdowns) {
@@ -216,7 +218,7 @@
     function renderDropdownContent(allPreds) {
       const preds = allPreds.filter(p => p.points !== null);
       if (!preds.length) {
-        return `<div class="px-4 py-4 text-xs text-on-surface-variant text-center">Nog geen punten gescoord</div>`;
+        return `<div class="px-4 py-4 text-xs text-on-surface-variant text-center">Scores zijn zichtbaar na verwerking van de eerste wedstrijd</div>`;
       }
 
       // Split by phase, then group-phase by subgroup

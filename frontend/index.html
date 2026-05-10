@@ -70,8 +70,9 @@
         <span class="text-lg font-black text-on-surface tracking-tight leading-none">2026™</span>
       </div>
     </div>
-    <div class="flex gap-2" id="header-actions">
-      <!-- Filled by JS -->
+    <div class="flex items-center gap-2">
+      <button id="langBtn" onclick="toggleLang()" class="text-[11px] font-semibold border border-outline-variant px-2.5 py-1 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">EN</button>
+      <div class="flex gap-2" id="header-actions"><!-- Filled by JS --></div>
     </div>
   </header>
 
@@ -120,6 +121,19 @@
     };
 
     const TOTAL_MATCHES = 104;
+
+    let lang = localStorage.getItem('wk_lang') || 'nl';
+    function applyLang() {
+      const btn = document.getElementById('langBtn');
+      if (btn) btn.textContent = lang === 'nl' ? 'EN' : 'NL';
+    }
+    function toggleLang() {
+      lang = lang === 'nl' ? 'en' : 'nl';
+      localStorage.setItem('wk_lang', lang);
+      applyLang();
+      init(); // re-render current view
+    }
+    applyLang();
 
     async function apiFetch(path, opts = {}) {
       const token = localStorage.getItem('wk_token');
@@ -228,7 +242,7 @@
 
     function teamName(match, side) {
       const team = match[`${side}Team`];
-      if (team) return team.nameNl || team.nameEn;
+      if (team) return lang === 'nl' ? (team.nameNl || team.nameEn) : (team.nameEn || team.nameNl);
       return match[`${side}TeamPlaceholder`] || '?';
     }
 

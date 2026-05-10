@@ -177,7 +177,9 @@
 
     if (!localStorage.getItem('wk_token')) window.location.href = 'login.html';
 
-    let allMatches = [], predMap = {}, statsMap = {}, aiMap = {}, boosterMap = {}, currentFilter = 'all', resolvedTeams = {}, autoSaveTimers = {}, lang = 'nl';
+    let allMatches = [], predMap = {}, statsMap = {}, aiMap = {}, boosterMap = {}, currentFilter = 'all', resolvedTeams = {}, autoSaveTimers = {};
+    let lang = localStorage.getItem('wk_lang') || 'nl';
+    document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
 
     async function apiFetch(path, opts = {}) {
       const token = localStorage.getItem('wk_token');
@@ -202,6 +204,7 @@
 
     function toggleLang() {
       lang = lang === 'nl' ? 'en' : 'nl';
+      localStorage.setItem('wk_lang', lang);
       document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
       renderList();
     }
