@@ -64,7 +64,7 @@
         <span class="material-symbols-outlined ms-filled" style="font-size:22px">sports_soccer</span>
       </div>
       <div>
-        <div class="text-[9px] font-bold tracking-[0.2em] text-primary uppercase">Voorspellen</div>
+        <div class="text-[9px] font-bold tracking-[0.2em] text-primary uppercase" data-nl="Voorspellen" data-en="Predict">Voorspellen</div>
         <div class="text-base font-black text-on-surface leading-none">WK Pool 2026</div>
       </div>
     </div>
@@ -77,13 +77,13 @@
   <!-- Filter pills (sticky below header) -->
   <div class="sticky top-16 z-40 bg-background border-b border-outline-variant">
     <div class="flex gap-2 px-4 py-3 overflow-x-auto no-scrollbar max-w-2xl mx-auto">
-      <button class="filter-pill active flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('all', this)">Alles</button>
-      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('group', this)">Groepsfase</button>
-      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('round_of_32', this)">R32</button>
-      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('round_of_16', this)">R16</button>
-      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('quarter_final', this)">KF</button>
-      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('semi_final', this)">HF</button>
-      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('final', this)">Finale</button>
+      <button class="filter-pill active flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('all', this)" data-nl="Alles" data-en="All">Alles</button>
+      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('group', this)" data-nl="Groepsfase" data-en="Group stage">Groepsfase</button>
+      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('round_of_32', this)" data-nl="R32" data-en="R32">R32</button>
+      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('round_of_16', this)" data-nl="R16" data-en="R16">R16</button>
+      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('quarter_final', this)" data-nl="KF" data-en="QF">KF</button>
+      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('semi_final', this)" data-nl="HF" data-en="SF">HF</button>
+      <button class="filter-pill flex-shrink-0 text-xs font-bold px-4 py-2 rounded-full" onclick="setFilter('final', this)" data-nl="Finale" data-en="Final">Finale</button>
     </div>
   </div>
 
@@ -93,7 +93,7 @@
       <div class="px-5 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="material-symbols-outlined ms-filled text-amber-500" style="font-size:20px">emoji_events</span>
-          <span class="text-sm font-bold text-amber-800">Bonus-voorspellingen</span>
+          <span class="text-sm font-bold text-amber-800" data-nl="Bonus-voorspellingen" data-en="Bonus predictions">Bonus-voorspellingen</span>
           <span id="bonus-deadline-badge" class="text-[10px] font-bold bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full"></span>
         </div>
         <button onclick="toggleBonus()" id="bonus-toggle-btn" class="text-amber-700 hover:text-amber-900 transition-colors">
@@ -104,12 +104,12 @@
         <div id="bonus-error" class="hidden text-xs text-error bg-[#ffdad6] rounded-xl px-3 py-2"></div>
         <!-- Champion -->
         <div>
-          <label class="text-xs font-bold tracking-widest text-amber-700 uppercase block mb-1">🏆 WK Kampioen (+20 punten)</label>
+          <label class="text-xs font-bold tracking-widest text-amber-700 uppercase block mb-1" data-nl="🏆 WK Kampioen (+20 punten)" data-en="🏆 WC Champion (+20 points)">🏆 WK Kampioen (+20 punten)</label>
           <div class="flex gap-2">
             <select id="bonus-champion-select" class="flex-1 bg-white border border-amber-200 rounded-xl px-3 py-2.5 text-sm text-on-surface focus:outline-none focus:border-amber-400 transition-colors">
-              <option value="">— Kies een land —</option>
+              <option value="" data-nl="— Kies een land —" data-en="— Choose a country —">— Kies een land —</option>
             </select>
-            <button onclick="saveChampion()" id="bonus-champion-btn" class="text-xs font-bold bg-amber-400 hover:bg-amber-500 text-amber-900 px-4 py-2 rounded-xl transition-colors active:scale-[0.98] disabled:opacity-50">
+            <button onclick="saveChampion()" id="bonus-champion-btn" class="text-xs font-bold bg-amber-400 hover:bg-amber-500 text-amber-900 px-4 py-2 rounded-xl transition-colors active:scale-[0.98] disabled:opacity-50" data-nl="Opslaan" data-en="Save">
               Opslaan
             </button>
           </div>
@@ -117,11 +117,11 @@
         </div>
         <!-- Top scorer -->
         <div>
-          <label class="text-xs font-bold tracking-widest text-amber-700 uppercase block mb-1">👟 Topscorer (+15 punten)</label>
+          <label class="text-xs font-bold tracking-widest text-amber-700 uppercase block mb-1" data-nl="👟 Topscorer (+15 punten)" data-en="👟 Top scorer (+15 points)">👟 Topscorer (+15 punten)</label>
           <div class="flex gap-2">
-            <input id="bonus-topscorer-input" type="text" placeholder="Naam van de speler..." maxlength="100"
+            <input id="bonus-topscorer-input" type="text" data-nl="Naam van de speler..." data-en="Player name..." placeholder="Naam van de speler..." maxlength="100"
               class="flex-1 bg-white border border-amber-200 rounded-xl px-3 py-2.5 text-sm text-on-surface focus:outline-none focus:border-amber-400 transition-colors placeholder:text-outline">
-            <button onclick="saveTopScorer()" id="bonus-topscorer-btn" class="text-xs font-bold bg-amber-400 hover:bg-amber-500 text-amber-900 px-4 py-2 rounded-xl transition-colors active:scale-[0.98] disabled:opacity-50">
+            <button onclick="saveTopScorer()" id="bonus-topscorer-btn" class="text-xs font-bold bg-amber-400 hover:bg-amber-500 text-amber-900 px-4 py-2 rounded-xl transition-colors active:scale-[0.98] disabled:opacity-50" data-nl="Opslaan" data-en="Save">
               Opslaan
             </button>
           </div>
@@ -147,19 +147,19 @@
     <div class="flex justify-around items-center h-16 max-w-2xl mx-auto">
       <a href="index.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
         <span class="material-symbols-outlined" style="font-size:22px">home</span>
-        <span class="text-[10px] font-medium">Home</span>
+        <span class="text-[10px] font-medium" data-nl="Home" data-en="Home">Home</span>
       </a>
       <a href="predict.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl nav-active">
         <span class="material-symbols-outlined" style="font-size:22px">sports_soccer</span>
-        <span class="text-[10px] font-medium">Voorspellen</span>
+        <span class="text-[10px] font-medium" data-nl="Voorspellen" data-en="Predict">Voorspellen</span>
       </a>
       <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
         <span class="material-symbols-outlined" style="font-size:22px">leaderboard</span>
-        <span class="text-[10px] font-medium">Ranglijst</span>
+        <span class="text-[10px] font-medium" data-nl="Ranglijst" data-en="Rankings">Ranglijst</span>
       </a>
       <a href="spelregels.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
         <span class="material-symbols-outlined" style="font-size:22px">gavel</span>
-        <span class="text-[10px] font-medium">Spelregels</span>
+        <span class="text-[10px] font-medium" data-nl="Spelregels" data-en="Rules">Spelregels</span>
       </a>
     </div>
   </nav>
@@ -170,9 +170,39 @@
       : `${window.location.protocol}//${window.location.host}/api/v1`;
 
     const PHASE_LABELS = {
-      group: 'Groepsfase', round_of_32: 'Ronde van 32', round_of_16: 'Achtste finales',
-      quarter_final: 'Kwartfinales', semi_final: 'Halve finales',
-      third_place: 'Troostfinale', final: 'Finale'
+      nl: { group: 'Groepsfase', round_of_32: 'Ronde van 32', round_of_16: 'Achtste finales', quarter_final: 'Kwartfinales', semi_final: 'Halve finales', third_place: 'Troostfinale', final: 'Finale' },
+      en: { group: 'Group stage', round_of_32: 'Round of 32', round_of_16: 'Round of 16', quarter_final: 'Quarter-finals', semi_final: 'Semi-finals', third_place: 'Third place', final: 'Final' },
+    };
+
+    const T = {
+      nl: {
+        locked: 'VERGRENDELD', saved: 'OPGESLAGEN', revised: '⚠ AANGEPAST · 50%',
+        draw: 'gelijk', filled: 'ingevuld', home: 'thuis', away: 'uit',
+        group: g => `Groep ${g}`,
+        boosterUsed: g => `Booster al gebruikt in groep ${g}`,
+        boosterActivate: 'Booster activeren',
+        boosterActiveLabel: '×2 actief',
+        boosterLocked: '×2',
+        noMatches: 'Geen wedstrijden in dit filter',
+        bonusDeadline: 'Deadline: 11 jun 2026',
+        bonusClosed: 'GESLOTEN',
+        savedLabel: name => `✓ Opgeslagen: ${name}`,
+        pointsLabel: pts => ` · ${pts} punten gescoord`,
+      },
+      en: {
+        locked: 'LOCKED', saved: 'SAVED', revised: '⚠ REVISED · 50%',
+        draw: 'draw', filled: 'filled', home: 'home', away: 'away',
+        group: g => `Group ${g}`,
+        boosterUsed: g => `Booster used in group ${g}`,
+        boosterActivate: 'Activate booster',
+        boosterActiveLabel: '×2 active',
+        boosterLocked: '×2',
+        noMatches: 'No matches in this filter',
+        bonusDeadline: 'Deadline: 11 Jun 2026',
+        bonusClosed: 'CLOSED',
+        savedLabel: name => `✓ Saved: ${name}`,
+        pointsLabel: pts => ` · ${pts} points scored`,
+      },
     };
 
     if (!localStorage.getItem('wk_token')) window.location.href = 'login.html';
@@ -206,6 +236,10 @@
       lang = lang === 'nl' ? 'en' : 'nl';
       localStorage.setItem('wk_lang', lang);
       document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+      document.querySelectorAll('[data-nl]').forEach(el => {
+        if (el.tagName === 'INPUT') el.placeholder = el.dataset[lang] || el.dataset.nl;
+        else el.textContent = el.dataset[lang] || el.dataset.nl;
+      });
       renderList();
     }
 
@@ -341,7 +375,7 @@
         document.getElementById('match-list').innerHTML = `
           <div class="text-center py-12">
             <span class="material-symbols-outlined text-outline" style="font-size:48px">sports_soccer</span>
-            <p class="text-on-surface-variant mt-2">Geen wedstrijden gevonden</p>
+            <p class="text-on-surface-variant mt-2">${T[lang].noMatches}</p>
           </div>`;
         return;
       }
@@ -372,7 +406,7 @@
             <section>
               <h3 class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4 flex items-center gap-2">
                 <span class="w-1 h-4 bg-primary rounded-full inline-block"></span>
-                ${PHASE_LABELS[phase]}
+                ${PHASE_LABELS[lang][phase]}
               </h3>
               ${subSections}
             </section>`;
@@ -382,7 +416,7 @@
           <section>
             <h3 class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-3 flex items-center gap-2">
               <span class="w-1 h-4 bg-primary rounded-full inline-block"></span>
-              ${PHASE_LABELS[phase]}
+              ${PHASE_LABELS[lang][phase]}
             </h3>
             <div class="space-y-3">${matchCards}</div>
           </section>`;
@@ -413,12 +447,12 @@
         ? (match.status === 'live'
           ? `<span class="absolute top-2 right-2 flex items-center gap-1 bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded-full"><span class="w-1.5 h-1.5 bg-error rounded-full animate-pulse inline-block"></span>LIVE</span>`
           : match.status === 'finished'
-            ? `<span class="absolute top-2 right-2 text-[10px] font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">GESPEELD</span>`
-            : `<span class="absolute top-2 right-2 text-[10px] font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">VERGRENDELD</span>`)
+            ? `<span class="absolute top-2 right-2 text-[10px] font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">${lang === 'nl' ? 'GESPEELD' : 'FT'}</span>`
+            : `<span class="absolute top-2 right-2 text-[10px] font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">${T[lang].locked}</span>`)
         : pred?.isRevised
-          ? `<span class="absolute top-2 right-2 text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">⚠ AANGEPAST · 50%</span>`
+          ? `<span class="absolute top-2 right-2 text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">${T[lang].revised}</span>`
           : pred
-            ? `<span class="absolute top-2 right-2 text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">OPGESLAGEN</span>`
+            ? `<span class="absolute top-2 right-2 text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">${T[lang].saved}</span>`
             : '';
 
       const homeVal = pred ? pred.homeScore : '';
@@ -482,7 +516,7 @@
         if (boosterElsewhere) return `
           <div class="mt-2 flex justify-center">
             <span class="inline-flex items-center gap-1.5 text-[10px] font-medium px-3 py-1 rounded-full bg-surface-container text-outline opacity-60">
-              ${goalSvg} Booster al gebruikt in groep ${match.group}
+              ${goalSvg} ${T[lang].boosterUsed(match.group)}
             </span>
           </div>`;
         return `
@@ -490,7 +524,7 @@
             <button onclick="toggleBooster('${match.id}','${match.group}')" id="boost-btn-${match.id}"
               class="inline-flex items-center gap-1.5 text-[11px] font-bold px-4 py-1.5 rounded-full border-2 border-dashed transition-all active:scale-95
                      border-orange-300 text-orange-400 hover:border-orange-400 hover:text-orange-500 hover:bg-orange-50">
-              ${goalSvg} Booster activeren &nbsp;<span class="font-black text-[12px]">×2</span>
+              ${goalSvg} ${T[lang].boosterActivate} &nbsp;<span class="font-black text-[12px]">×2</span>
             </button>
           </div>`;
       })() : '';
@@ -511,7 +545,7 @@
             </span>
             <span class="text-indigo-600 font-bold">${awayName} ${ai.awayPct}%</span>
           </div>
-          ${ai.drawPct > 0 ? `<div class="text-center text-[9px] text-indigo-400 mt-0.5">gelijk ${ai.drawPct}%</div>` : ''}`;
+          ${ai.drawPct > 0 ? `<div class="text-center text-[9px] text-indigo-400 mt-0.5">${T[lang].draw} ${ai.drawPct}%</div>` : ''}`;
         return `<div class="mt-2 pt-2 border-t border-indigo-100 bg-indigo-50/40 rounded-xl px-2 py-1.5">${bar}${labels}</div>`;
       })() : '';
 
@@ -528,7 +562,7 @@
         const labels = total > 0
           ? `<div class="flex items-start justify-between text-[10px] text-on-surface-variant leading-tight">
               <span><span class="font-bold" style="color:var(--md-sys-color-primary)">${st.homePct}%</span> ${homeName}</span>
-              <span class="text-center text-outline px-1">${st.drawPct > 0 ? `gelijk ${st.drawPct}%` : ''}<br><span class="text-[9px]">${total} ingevuld</span></span>
+              <span class="text-center text-outline px-1">${st.drawPct > 0 ? `${T[lang].draw} ${st.drawPct}%` : ''}<br><span class="text-[9px]">${total} ${T[lang].filled}</span></span>
               <span class="text-right">${awayName} <span class="font-bold" style="color:var(--md-sys-color-secondary)">${st.awayPct}%</span></span>
              </div>`
           : '';
@@ -630,7 +664,7 @@
         if (isRevise) {
           const article = homeInput.closest('article');
           const badge = article?.querySelector('[class*="absolute top-2 right-2"]');
-          if (badge) { badge.textContent = '⚠ AANGEPAST · 50%'; badge.className = 'absolute top-2 right-2 text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full'; }
+          if (badge) { badge.textContent = T[lang].revised; badge.className = 'absolute top-2 right-2 text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full'; }
         }
 
         document.getElementById('progress-badge').textContent = `${Object.keys(predMap).length} / ${allMatches.length}`;
@@ -667,7 +701,7 @@
     async function loadBonusSection() {
       bonusLocked = new Date() >= TOURNAMENT_START;
       const badge = document.getElementById('bonus-deadline-badge');
-      badge.textContent = bonusLocked ? 'GESLOTEN' : 'Deadline: 11 jun 2026';
+      badge.textContent = bonusLocked ? T[lang].bonusClosed : T[lang].bonusDeadline;
 
       // Load teams for champion dropdown
       const teamsRes = await apiFetch('/matches?phase=group');
@@ -695,12 +729,12 @@
         const topScorer = bonusPreds.find(b => b.type === 'top_scorer');
         if (champion?.teamId) {
           document.getElementById('bonus-champion-select').value = champion.teamId;
-          document.getElementById('bonus-champion-saved').textContent = `✓ Opgeslagen: ${champion.team?.nameNl || ''}${champion.points !== null ? ` · ${champion.points} punten gescoord` : ''}`;
+          document.getElementById('bonus-champion-saved').textContent = T[lang].savedLabel(lang==='nl'?(champion.team?.nameNl||''):(champion.team?.nameEn||'')) + (champion.points !== null ? T[lang].pointsLabel(champion.points) : '');
           document.getElementById('bonus-champion-saved').classList.remove('hidden');
         }
         if (topScorer?.playerName) {
           document.getElementById('bonus-topscorer-input').value = topScorer.playerName;
-          document.getElementById('bonus-topscorer-saved').textContent = `✓ Opgeslagen: ${topScorer.playerName}${topScorer.points !== null ? ` · ${topScorer.points} punten gescoord` : ''}`;
+          document.getElementById('bonus-topscorer-saved').textContent = T[lang].savedLabel(topScorer.playerName) + (topScorer.points !== null ? T[lang].pointsLabel(topScorer.points) : '');
           document.getElementById('bonus-topscorer-saved').classList.remove('hidden');
         }
         if (bonusLocked) {
@@ -732,7 +766,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Opslaan mislukt');
         const savedEl = document.getElementById('bonus-champion-saved');
-        savedEl.textContent = `✓ Opgeslagen: ${data.team?.nameNl || ''}`;
+        savedEl.textContent = T[lang].savedLabel(lang==='nl'?(data.team?.nameNl||''):(data.team?.nameEn||''));
         savedEl.classList.remove('hidden');
       } catch (err) {
         showBonusError(err.message);
@@ -752,7 +786,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Opslaan mislukt');
         const savedEl = document.getElementById('bonus-topscorer-saved');
-        savedEl.textContent = `✓ Opgeslagen: ${data.playerName}`;
+        savedEl.textContent = T[lang].savedLabel(data.playerName);
         savedEl.classList.remove('hidden');
       } catch (err) {
         showBonusError(err.message);

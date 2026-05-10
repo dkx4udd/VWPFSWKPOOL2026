@@ -60,8 +60,8 @@
         <span class="material-symbols-outlined ms-filled" style="font-size:22px">leaderboard</span>
       </div>
       <div>
-        <div class="text-[9px] font-bold tracking-[0.2em] text-primary uppercase">Klassement</div>
-        <div class="text-base font-black text-on-surface leading-none">Ranglijst</div>
+        <div class="text-[9px] font-bold tracking-[0.2em] text-primary uppercase" data-nl="Klassement" data-en="Rankings">Klassement</div>
+        <div class="text-base font-black text-on-surface leading-none" data-nl="Ranglijst" data-en="Leaderboard">Ranglijst</div>
       </div>
     </div>
     <div class="flex items-center gap-2">
@@ -92,19 +92,19 @@
     <div class="flex justify-around items-center h-16 max-w-2xl mx-auto">
       <a href="index.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
         <span class="material-symbols-outlined" style="font-size:22px">home</span>
-        <span class="text-[10px] font-medium">Home</span>
+        <span class="text-[10px] font-medium" data-nl="Home" data-en="Home">Home</span>
       </a>
       <a href="predict.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
         <span class="material-symbols-outlined" style="font-size:22px">sports_soccer</span>
-        <span class="text-[10px] font-medium">Voorspellen</span>
+        <span class="text-[10px] font-medium" data-nl="Voorspellen" data-en="Predict">Voorspellen</span>
       </a>
       <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl nav-active">
         <span class="material-symbols-outlined" style="font-size:22px">leaderboard</span>
-        <span class="text-[10px] font-medium">Ranglijst</span>
+        <span class="text-[10px] font-medium" data-nl="Ranglijst" data-en="Rankings">Ranglijst</span>
       </a>
       <a href="spelregels.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
         <span class="material-symbols-outlined" style="font-size:22px">gavel</span>
-        <span class="text-[10px] font-medium">Spelregels</span>
+        <span class="text-[10px] font-medium" data-nl="Spelregels" data-en="Rules">Spelregels</span>
       </a>
     </div>
   </nav>
@@ -131,6 +131,7 @@
       lang = lang === 'nl' ? 'en' : 'nl';
       localStorage.setItem('wk_lang', lang);
       document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+      document.querySelectorAll('[data-nl]').forEach(el => { el.textContent = el.dataset[lang] || el.dataset.nl; });
       // Re-render open dropdowns with new language
       for (const userId of openDropdowns) {
         const content = document.getElementById(`dc-${userId}`);
@@ -159,14 +160,14 @@
       return colors[pos % colors.length];
     }
 
+    const T = {
+      nl: { pred: 'voorsp.', result: 'uitslag', noScores: 'Scores zijn zichtbaar na verwerking van de eerste wedstrijd', loading: 'Laden…', loadFail: 'Laden mislukt', podium: 'Podium', fullRanking: 'Volledige Ranglijst', alphabetical: 'Deelnemers — Alfabetisch', yourPos: 'Jouw positie', show: 'Toon ↓', points: 'punten', waiting: 'Wachten op eerste wedstrijd…', settled: 'gesettled', exact: 'exact', bonus: 'bonus', group: g => `Groep ${g}`, wkStart: 'WK 2026 begint op 11 juni', wkStartSub: 'Punten worden berekend na afloop van elke wedstrijd. Klik op een speler om zijn voorspellingen te bekijken.', cantLoad: 'Kon voorspellingen niet laden', errorLoad: 'Fout bij laden:' },
+      en: { pred: 'pred.', result: 'result', noScores: 'Scores visible after first match is settled', loading: 'Loading…', loadFail: 'Failed to load', podium: 'Podium', fullRanking: 'Full Leaderboard', alphabetical: 'Participants — Alphabetical', yourPos: 'Your position', show: 'Show ↓', points: 'points', waiting: 'Waiting for first match…', settled: 'settled', exact: 'exact', bonus: 'bonus', group: g => `Group ${g}`, wkStart: 'World Cup 2026 starts June 11', wkStartSub: 'Points are calculated after each match. Click a player to view their predictions.', cantLoad: 'Could not load predictions', errorLoad: 'Error loading:' },
+    };
+
     const PHASE_LABELS = {
-      group: 'Groepsfase',
-      round_of_32: 'Ronde van 32',
-      round_of_16: 'Achtste finales',
-      quarter_final: 'Kwartfinales',
-      semi_final: 'Halve finales',
-      third_place: '3e Plaats',
-      final: 'Finale',
+      nl: { group: 'Groepsfase', round_of_32: 'Ronde van 32', round_of_16: 'Achtste finales', quarter_final: 'Kwartfinales', semi_final: 'Halve finales', third_place: '3e Plaats', final: 'Finale' },
+      en: { group: 'Group stage', round_of_32: 'Round of 32', round_of_16: 'Round of 16', quarter_final: 'Quarter-finals', semi_final: 'Semi-finals', third_place: '3rd Place', final: 'Final' },
     };
 
     function ptsBadge(points) {
@@ -202,12 +203,12 @@
           </div>
           <div class="flex-shrink-0 flex items-center gap-2">
             <div class="text-center">
-              <div class="text-[10px] text-on-surface-variant leading-none mb-0.5">voorsp.</div>
+              <div class="text-[10px] text-on-surface-variant leading-none mb-0.5">${T[lang].pred}</div>
               <div class="text-xs font-bold text-on-surface">${p.homeScore}–${p.awayScore}${revised}</div>
             </div>
             ${actual !== null ? `
             <div class="text-center">
-              <div class="text-[10px] text-on-surface-variant leading-none mb-0.5">uitslag</div>
+              <div class="text-[10px] text-on-surface-variant leading-none mb-0.5">${T[lang].result}</div>
               <div class="text-xs font-semibold text-on-surface">${actual}</div>
             </div>` : ''}
             ${ptsBadge(p.points)}
@@ -218,7 +219,7 @@
     function renderDropdownContent(allPreds) {
       const preds = allPreds.filter(p => p.points !== null);
       if (!preds.length) {
-        return `<div class="px-4 py-4 text-xs text-on-surface-variant text-center">Scores zijn zichtbaar na verwerking van de eerste wedstrijd</div>`;
+        return `<div class="px-4 py-4 text-xs text-on-surface-variant text-center">${T[lang].noScores}</div>`;
       }
 
       // Split by phase, then group-phase by subgroup
@@ -241,13 +242,13 @@
           }
           return Object.keys(byGroup).sort().map(g => `
             <div class="px-4 pt-2 pb-1">
-              <div class="text-[10px] font-bold tracking-widest text-primary uppercase mb-1">Groep ${g}</div>
+              <div class="text-[10px] font-bold tracking-widest text-primary uppercase mb-1">${T[lang].group(g)}</div>
               ${byGroup[g].map(predRow).join('')}
             </div>`).join('');
         }
         return `
           <div class="px-4 pt-2 pb-1">
-            <div class="text-[10px] font-bold tracking-widest text-primary uppercase mb-1">${PHASE_LABELS[ph] || ph}</div>
+            <div class="text-[10px] font-bold tracking-widest text-primary uppercase mb-1">${PHASE_LABELS[lang][ph] || ph}</div>
             ${items.map(predRow).join('')}
           </div>`;
       }).join('');
@@ -278,7 +279,7 @@
       content.innerHTML = `
         <div class="px-4 py-3 flex items-center gap-2 text-xs text-on-surface-variant">
           <div class="w-3 h-3 rounded-full border-2 border-primary border-t-transparent animate-spin"></div>
-          Laden…
+          ${T[lang].loading}
         </div>`;
 
       try {
@@ -288,7 +289,7 @@
         loadedDropdowns.set(userId, preds);
         if (openDropdowns.has(userId)) content.innerHTML = renderDropdownContent(preds);
       } catch {
-        content.innerHTML = `<div class="px-4 py-3 text-xs text-red-500">Kon voorspellingen niet laden</div>`;
+        content.innerHTML = `<div class="px-4 py-3 text-xs text-red-500">${T[lang].cantLoad}</div>`;
       }
     }
 
@@ -305,7 +306,7 @@
 
       return `
         <div class="bg-surface-container-lowest rounded-2xl px-4 pt-6 pb-0 shadow-[0_2px_8px_rgba(71,0,176,0.06)] mb-4 overflow-hidden">
-          <div class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4 text-center">Podium</div>
+          <div class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4 text-center">${T[lang].podium}</div>
           <div class="flex items-end gap-2">
             ${order.map((player, i) => {
               const oi = orderIdxs[i];
@@ -353,15 +354,15 @@
                 <div class="font-semibold text-sm text-on-surface truncate">${p.firstName} ${p.lastName}${isMe ? ' <span class="text-primary text-[10px] font-bold">(jij)</span>' : ''}</div>
                 <div class="text-xs text-on-surface-variant">
                   ${noPointsYet
-                    ? 'Wachten op eerste wedstrijd…'
-                    : `${p.exactCount}× exact · ${p.settledCount} gesettled${p.bonusPoints > 0 ? ` · <span class="text-amber-600 font-semibold">+${p.bonusPoints} bonus</span>` : ''}`}
+                    ? T[lang].waiting
+                    : `${p.exactCount}× ${T[lang].exact} · ${p.settledCount} ${T[lang].settled}${p.bonusPoints > 0 ? ` · <span class="text-amber-600 font-semibold">+${p.bonusPoints} ${T[lang].bonus}</span>` : ''}`}
                 </div>
               </div>
               <div class="flex items-center gap-2 flex-shrink-0">
                 ${noPointsYet ? '' : `
                 <div class="text-right">
                   <div class="font-black text-lg text-primary leading-none">${p.totalPoints}</div>
-                  <div class="text-[10px] text-on-surface-variant">punten</div>
+                  <div class="text-[10px] text-on-surface-variant">${T[lang].points}</div>
                 </div>`}
                 <span id="ch-${p.userId}" class="material-symbols-outlined text-on-surface-variant chevron" style="font-size:18px">expand_more</span>
               </div>
@@ -375,10 +376,10 @@
       const header = noPointsYet
         ? `<div class="flex items-center gap-2 px-4 py-3 border-b border-outline-variant">
              <span class="material-symbols-outlined text-outline" style="font-size:16px">sort_by_alpha</span>
-             <div class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Deelnemers — Alfabetisch</div>
+             <div class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">${T[lang].alphabetical}</div>
            </div>`
         : `<div class="px-4 py-3 border-b border-outline-variant">
-             <div class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Volledige Ranglijst</div>
+             <div class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">${T[lang].fullRanking}</div>
            </div>`;
 
       return `
@@ -401,7 +402,7 @@
 
       try {
         const res = await apiFetch('/rankings');
-        if (!res.ok) throw new Error('Laden mislukt');
+        if (!res.ok) throw new Error(T[lang].loadFail);
         const players = await res.json();
         const noPointsYet = players.length === 0 || players.every(p => p.totalPoints === 0);
 
@@ -413,13 +414,13 @@
             <div class="flex items-center justify-between bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 mb-4">
               <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined ms-filled text-primary" style="font-size:20px">person</span>
-                <span class="text-sm font-semibold text-on-surface">Jouw positie</span>
+                <span class="text-sm font-semibold text-on-surface">${T[lang].yourPos}</span>
               </div>
               <div class="flex items-center gap-3">
                 <span class="text-sm font-bold text-on-surface">#${myEntry.position}</span>
                 <span class="text-lg font-black text-primary">${myEntry.totalPoints}pts</span>
                 <button onclick="document.getElementById('row-${myEntry.userId}').scrollIntoView({behavior:'smooth',block:'center'})"
-                  class="text-xs font-semibold text-primary hover:underline">Toon ↓</button>
+                  class="text-xs font-semibold text-primary hover:underline">${T[lang].show}</button>
               </div>
             </div>`;
         }
@@ -433,8 +434,8 @@
             <div class="bg-surface-container-lowest rounded-2xl px-4 py-4 mb-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)] flex items-start gap-3">
               <span class="material-symbols-outlined ms-filled text-primary mt-0.5" style="font-size:22px">sports_soccer</span>
               <div>
-                <div class="text-sm font-bold text-on-surface">WK 2026 begint op 11 juni</div>
-                <div class="text-xs text-on-surface-variant mt-0.5">Punten worden berekend na afloop van elke wedstrijd. Klik op een speler om zijn voorspellingen te bekijken.</div>
+                <div class="text-sm font-bold text-on-surface">${T[lang].wkStart}</div>
+                <div class="text-xs text-on-surface-variant mt-0.5">Punten worden berekend na afloop van elke wedstrijd. ${T[lang].wkStartSub}</div>
               </div>
             </div>`;
         }
@@ -445,7 +446,7 @@
         document.getElementById('ranking-content').innerHTML = `
           <div class="text-center py-12">
             <span class="material-symbols-outlined text-error" style="font-size:40px">error</span>
-            <p class="text-on-surface-variant mt-2">Fout bij laden: ${err.message}</p>
+            <p class="text-on-surface-variant mt-2">${T[lang].errorLoad} ${err.message}</p>
             <button onclick="loadRanking()" class="mt-4 text-primary font-semibold text-sm">Opnieuw proberen</button>
           </div>`;
       }
