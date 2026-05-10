@@ -27,6 +27,19 @@ export class PredictionsController {
     return this.predictionsService.getAiPredictions();
   }
 
+  @Get('boosters')
+  myBoosters(@CurrentUser() user: { id: string }) {
+    return this.predictionsService.getUserBoosters(user.id);
+  }
+
+  @Post('match/:matchId/boost')
+  toggleBooster(
+    @CurrentUser() user: { id: string },
+    @Param('matchId') matchId: string,
+  ) {
+    return this.predictionsService.toggleBooster(user.id, matchId);
+  }
+
   @Post('match/:matchId')
   upsert(
     @CurrentUser() user: { id: string },

@@ -6,13 +6,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Prediction } from '../../infrastructure/database/entities/prediction.entity';
 import { Match, MatchStatus } from '../../infrastructure/database/entities/match.entity';
+import { Booster } from '../../infrastructure/database/entities/booster.entity';
 import { UpsertPredictionDto } from './dto/upsert-prediction.dto';
 
 @Injectable()
 export class PredictionsService {
   constructor(
     @InjectRepository(Prediction) private predRepo: Repository<Prediction>,
-    @InjectRepository(Match) private matchRepo: Repository<Match>,
+    @InjectRepository(Match)      private matchRepo: Repository<Match>,
+    @InjectRepository(Booster)    private boosterRepo: Repository<Booster>,
   ) {}
 
   async upsert(userId: string, matchId: string, dto: UpsertPredictionDto) {
@@ -237,14 +239,43 @@ export class PredictionsService {
     }
 
     const predictions = await this.predRepo.find({ where: { matchId } });
+    const boosters    = await this.boosterRepo.find({ where: { matchId } });
+    const boostedUsers = new Set(boosters.map(b => b.userId));
+
     for (const pred of predictions) {
-      const raw = this.calculatePoints(
-        pred.homeScore, pred.awayScore,
-        match.homeScore!, match.awayScore!,
-      );
-      const pts = pred.isRevised ? Math.floor(raw / 2) : raw;
+      const raw      = this.calculatePoints(pred.homeScore, pred.awayScore, match.homeScore!, match.awayScore!);
+      const boosted  = boostedUsers.has(pred.userId) ? raw * 2 : raw;
+      const pts      = pred.isRevised ? Math.floor(boosted / 2) : boosted;
       await this.predRepo.update(pred.id, { points: pts });
     }
     return { settled: predictions.length };
+  }
+
+  async getUserBoosters(userId: string) {
+    return this.boosterRepo.find({ where: { userId } });
+  }
+
+  async toggleBooster(userId: string, matchId: string): Promise<{ active: boolean; matchId: string }> {
+    const match = await this.matchRepo.findOne({ where: { id: matchId } });
+    if (!match) throw new NotFoundException('Match not found');
+    if (match.phase !== MatchPhase.GROUP || !match.group)
+      throw new BadRequestException('Booster alleen beschikbaar in groepsfase');
+    if (match.status !== MatchStatus.SCHEDULED)
+      throw new ForbiddenException('Wedstrijd is al begonnen');
+    if (new Date() >= match.scheduledAt)
+      throw new ForbiddenException('Wedstrijd is al begonnen');
+
+    const existing = await this.boosterRepo.findOne({ where: { userId, matchId } });
+    if (existing) {
+      await this.boosterRepo.delete(existing.id);
+      return { active: false, matchId };
+    }
+
+    // Verwijder eventuele andere booster in dezelfde groep
+    await this.boosterRepo.delete({ userId, matchGroup: match.group });
+
+    const booster = this.boosterRepo.create({ userId, matchId, matchGroup: match.group });
+    await this.boosterRepo.save(booster);
+    return { active: true, matchId };
   }
 }
