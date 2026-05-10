@@ -55,11 +55,26 @@ export class PredictionsService {
     predHome: number, predAway: number,
     realHome: number, realAway: number,
   ): number {
-    if (predHome === realHome && predAway === realAway) return 3;
+    // Exact score
+    if (predHome === realHome && predAway === realAway) return 10;
 
-    const predWinner = Math.sign(predHome - predAway);
-    const realWinner = Math.sign(realHome - realAway);
-    if (predWinner === realWinner) return 1;
+    const predOutcome = Math.sign(predHome - predAway);
+    const realOutcome = Math.sign(realHome - realAway);
+    const correctOutcome = predOutcome === realOutcome;
+    const homeMatch = predHome === realHome;
+    const awayMatch = predAway === realAway;
+
+    // Correct draw (predicted draw, result is draw, not exact score)
+    if (correctOutcome && predOutcome === 0) return 7;
+
+    // Correct winner + one team score exact
+    if (correctOutcome && (homeMatch || awayMatch)) return 5;
+
+    // Correct winner only
+    if (correctOutcome) return 3;
+
+    // One team score exact (wrong outcome)
+    if (homeMatch || awayMatch) return 1;
 
     return 0;
   }

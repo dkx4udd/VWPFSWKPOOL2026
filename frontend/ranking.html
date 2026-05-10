@@ -83,17 +83,21 @@
   <!-- Bottom Nav -->
   <nav class="fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant z-50">
     <div class="flex justify-around items-center h-16 max-w-2xl mx-auto">
-      <a href="index.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
-        <span class="material-symbols-outlined" style="font-size:24px">home</span>
-        <span class="text-[11px] font-medium">Home</span>
+      <a href="index.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px">home</span>
+        <span class="text-[10px] font-medium">Home</span>
       </a>
-      <a href="predict.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
-        <span class="material-symbols-outlined" style="font-size:24px">sports_soccer</span>
-        <span class="text-[11px] font-medium">Voorspellen</span>
+      <a href="predict.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px">sports_soccer</span>
+        <span class="text-[10px] font-medium">Voorspellen</span>
       </a>
-      <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl nav-active">
-        <span class="material-symbols-outlined" style="font-size:24px">leaderboard</span>
-        <span class="text-[11px] font-medium">Ranglijst</span>
+      <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl nav-active">
+        <span class="material-symbols-outlined" style="font-size:22px">leaderboard</span>
+        <span class="text-[10px] font-medium">Ranglijst</span>
+      </a>
+      <a href="spelregels.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px">gavel</span>
+        <span class="text-[10px] font-medium">Spelregels</span>
       </a>
     </div>
   </nav>
@@ -194,7 +198,7 @@
             </div>
             <div class="flex-1 min-w-0">
               <div class="font-semibold text-sm text-on-surface truncate">${p.firstName} ${p.lastName}${isMe ? ' <span class="text-primary text-[10px] font-bold">(jij)</span>' : ''}</div>
-              <div class="text-xs text-on-surface-variant">${p.exactCount} exact · ${p.settledCount} gesettled</div>
+              <div class="text-xs text-on-surface-variant">${p.exactCount}× exact · ${p.settledCount} gesettled${p.bonusPoints > 0 ? ` · <span class="text-amber-600 font-semibold">+${p.bonusPoints} bonus</span>` : ''}</div>
             </div>
             <div class="text-right flex-shrink-0">
               <div class="font-black text-lg text-primary leading-none">${p.totalPoints}</div>

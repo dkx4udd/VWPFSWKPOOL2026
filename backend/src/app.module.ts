@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MatchesModule } from './modules/matches/matches.module';
 import { PredictionsModule } from './modules/predictions/predictions.module';
 import { RankingsModule } from './modules/rankings/rankings.module';
+import { BonusPredictionsModule } from './modules/bonus-predictions/bonus-predictions.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RankingsModule } from './modules/rankings/rankings.module';
     MatchesModule,
     PredictionsModule,
     RankingsModule,
+    BonusPredictionsModule,
   ],
 })
 export class AppModule {}

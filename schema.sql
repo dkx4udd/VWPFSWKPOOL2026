@@ -76,8 +76,24 @@ CREATE TABLE predictions (
   UNIQUE(user_id, match_id)
 );
 
+-- Bonus Predictions (kampioen + topscorer)
+CREATE TYPE bonus_prediction_type AS ENUM ('champion', 'top_scorer');
+
+CREATE TABLE bonus_predictions (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  type        bonus_prediction_type NOT NULL,
+  team_id     UUID REFERENCES teams(id),
+  player_name TEXT,
+  points      INT,
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(user_id, type)
+);
+
 -- Indexes
 CREATE INDEX idx_matches_scheduled_at ON matches("scheduledAt");
 CREATE INDEX idx_matches_status ON matches(status);
 CREATE INDEX idx_predictions_user ON predictions(user_id);
 CREATE INDEX idx_predictions_match ON predictions(match_id);
+CREATE INDEX idx_bonus_predictions_user ON bonus_predictions(user_id);

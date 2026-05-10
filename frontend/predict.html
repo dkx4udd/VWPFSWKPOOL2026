@@ -84,6 +84,50 @@
     </div>
   </div>
 
+  <!-- Bonus predictions banner -->
+  <div id="bonus-section" class="max-w-2xl mx-auto px-4 pt-4">
+    <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl overflow-hidden">
+      <div class="px-5 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined ms-filled text-amber-500" style="font-size:20px">emoji_events</span>
+          <span class="text-sm font-bold text-amber-800">Bonus-voorspellingen</span>
+          <span id="bonus-deadline-badge" class="text-[10px] font-bold bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full"></span>
+        </div>
+        <button onclick="toggleBonus()" id="bonus-toggle-btn" class="text-amber-700 hover:text-amber-900 transition-colors">
+          <span class="material-symbols-outlined" id="bonus-toggle-icon" style="font-size:20px">expand_more</span>
+        </button>
+      </div>
+      <div id="bonus-panel" class="hidden px-5 pb-4 space-y-4">
+        <div id="bonus-error" class="hidden text-xs text-error bg-[#ffdad6] rounded-xl px-3 py-2"></div>
+        <!-- Champion -->
+        <div>
+          <label class="text-xs font-bold tracking-widest text-amber-700 uppercase block mb-1">🏆 WK Kampioen (+20 punten)</label>
+          <div class="flex gap-2">
+            <select id="bonus-champion-select" class="flex-1 bg-white border border-amber-200 rounded-xl px-3 py-2.5 text-sm text-on-surface focus:outline-none focus:border-amber-400 transition-colors">
+              <option value="">— Kies een land —</option>
+            </select>
+            <button onclick="saveChampion()" id="bonus-champion-btn" class="text-xs font-bold bg-amber-400 hover:bg-amber-500 text-amber-900 px-4 py-2 rounded-xl transition-colors active:scale-[0.98] disabled:opacity-50">
+              Opslaan
+            </button>
+          </div>
+          <div id="bonus-champion-saved" class="hidden mt-1 text-xs text-secondary font-semibold"></div>
+        </div>
+        <!-- Top scorer -->
+        <div>
+          <label class="text-xs font-bold tracking-widest text-amber-700 uppercase block mb-1">👟 Topscorer (+15 punten)</label>
+          <div class="flex gap-2">
+            <input id="bonus-topscorer-input" type="text" placeholder="Naam van de speler..." maxlength="100"
+              class="flex-1 bg-white border border-amber-200 rounded-xl px-3 py-2.5 text-sm text-on-surface focus:outline-none focus:border-amber-400 transition-colors placeholder:text-outline">
+            <button onclick="saveTopScorer()" id="bonus-topscorer-btn" class="text-xs font-bold bg-amber-400 hover:bg-amber-500 text-amber-900 px-4 py-2 rounded-xl transition-colors active:scale-[0.98] disabled:opacity-50">
+              Opslaan
+            </button>
+          </div>
+          <div id="bonus-topscorer-saved" class="hidden mt-1 text-xs text-secondary font-semibold"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Main -->
   <main id="match-list" class="px-4 pt-4 pb-24 max-w-2xl mx-auto space-y-6">
     <!-- Skeleton -->
@@ -98,17 +142,21 @@
   <!-- Bottom Nav -->
   <nav class="fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant z-50">
     <div class="flex justify-around items-center h-16 max-w-2xl mx-auto">
-      <a href="index.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
-        <span class="material-symbols-outlined" style="font-size:24px">home</span>
-        <span class="text-[11px] font-medium">Home</span>
+      <a href="index.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px">home</span>
+        <span class="text-[10px] font-medium">Home</span>
       </a>
-      <a href="predict.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl nav-active">
-        <span class="material-symbols-outlined" style="font-size:24px">sports_soccer</span>
-        <span class="text-[11px] font-medium">Voorspellen</span>
+      <a href="predict.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl nav-active">
+        <span class="material-symbols-outlined" style="font-size:22px">sports_soccer</span>
+        <span class="text-[10px] font-medium">Voorspellen</span>
       </a>
-      <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
-        <span class="material-symbols-outlined" style="font-size:24px">leaderboard</span>
-        <span class="text-[11px] font-medium">Ranglijst</span>
+      <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px">leaderboard</span>
+        <span class="text-[10px] font-medium">Ranglijst</span>
+      </a>
+      <a href="spelregels.html" class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px">gavel</span>
+        <span class="text-[10px] font-medium">Spelregels</span>
       </a>
     </div>
   </nav>
@@ -344,6 +392,121 @@
       }
     }
 
+    // ── Bonus predictions ─────────────────────────────────────────────────
+    const TOURNAMENT_START = new Date('2026-06-11T00:00:00Z');
+    let bonusLocked = false;
+
+    function toggleBonus() {
+      const panel = document.getElementById('bonus-panel');
+      const icon = document.getElementById('bonus-toggle-icon');
+      const hidden = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !hidden);
+      icon.textContent = hidden ? 'expand_less' : 'expand_more';
+    }
+
+    function showBonusError(msg) {
+      const el = document.getElementById('bonus-error');
+      el.textContent = msg; el.classList.remove('hidden');
+      setTimeout(() => el.classList.add('hidden'), 4000);
+    }
+
+    async function loadBonusSection() {
+      bonusLocked = new Date() >= TOURNAMENT_START;
+      const badge = document.getElementById('bonus-deadline-badge');
+      badge.textContent = bonusLocked ? 'GESLOTEN' : 'Deadline: 11 jun 2026';
+
+      // Load teams for champion dropdown
+      const teamsRes = await apiFetch('/matches?phase=group');
+      if (teamsRes.ok) {
+        const matches = await teamsRes.json();
+        const teamSet = new Map();
+        matches.forEach(m => {
+          if (m.homeTeam) teamSet.set(m.homeTeam.id, m.homeTeam.nameNl);
+          if (m.awayTeam) teamSet.set(m.awayTeam.id, m.awayTeam.nameNl);
+        });
+        const sel = document.getElementById('bonus-champion-select');
+        [...teamSet.entries()].sort((a,b) => a[1].localeCompare(b[1])).forEach(([id, name]) => {
+          const opt = document.createElement('option');
+          opt.value = id; opt.textContent = name;
+          sel.appendChild(opt);
+        });
+        if (bonusLocked) sel.disabled = true;
+      }
+
+      // Load existing bonus predictions
+      const bonusRes = await apiFetch('/bonus-predictions/my');
+      if (bonusRes.ok) {
+        const bonusPreds = await bonusRes.json();
+        const champion = bonusPreds.find(b => b.type === 'champion');
+        const topScorer = bonusPreds.find(b => b.type === 'top_scorer');
+        if (champion?.teamId) {
+          document.getElementById('bonus-champion-select').value = champion.teamId;
+          document.getElementById('bonus-champion-saved').textContent = `✓ Opgeslagen: ${champion.team?.nameNl || ''}${champion.points !== null ? ` · ${champion.points} punten gescoord` : ''}`;
+          document.getElementById('bonus-champion-saved').classList.remove('hidden');
+        }
+        if (topScorer?.playerName) {
+          document.getElementById('bonus-topscorer-input').value = topScorer.playerName;
+          document.getElementById('bonus-topscorer-saved').textContent = `✓ Opgeslagen: ${topScorer.playerName}${topScorer.points !== null ? ` · ${topScorer.points} punten gescoord` : ''}`;
+          document.getElementById('bonus-topscorer-saved').classList.remove('hidden');
+        }
+        if (bonusLocked) {
+          document.getElementById('bonus-topscorer-input').disabled = true;
+          document.getElementById('bonus-champion-btn').disabled = true;
+          document.getElementById('bonus-topscorer-btn').disabled = true;
+        }
+      }
+
+      // Auto-open if not locked and incomplete
+      if (!bonusLocked) {
+        const bonusRes2 = await apiFetch('/bonus-predictions/my');
+        if (bonusRes2.ok) {
+          const bp = await bonusRes2.json();
+          if (bp.length < 2) toggleBonus();
+        }
+      }
+    }
+
+    async function saveChampion() {
+      const teamId = document.getElementById('bonus-champion-select').value;
+      if (!teamId) return showBonusError('Selecteer een land');
+      const btn = document.getElementById('bonus-champion-btn');
+      btn.disabled = true;
+      try {
+        const res = await apiFetch('/bonus-predictions/champion', {
+          method: 'POST', body: JSON.stringify({ teamId }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Opslaan mislukt');
+        const savedEl = document.getElementById('bonus-champion-saved');
+        savedEl.textContent = `✓ Opgeslagen: ${data.team?.nameNl || ''}`;
+        savedEl.classList.remove('hidden');
+      } catch (err) {
+        showBonusError(err.message);
+        btn.disabled = false;
+      }
+    }
+
+    async function saveTopScorer() {
+      const playerName = document.getElementById('bonus-topscorer-input').value.trim();
+      if (!playerName) return showBonusError('Vul een spelernaam in');
+      const btn = document.getElementById('bonus-topscorer-btn');
+      btn.disabled = true;
+      try {
+        const res = await apiFetch('/bonus-predictions/top-scorer', {
+          method: 'POST', body: JSON.stringify({ playerName }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Opslaan mislukt');
+        const savedEl = document.getElementById('bonus-topscorer-saved');
+        savedEl.textContent = `✓ Opgeslagen: ${data.playerName}`;
+        savedEl.classList.remove('hidden');
+      } catch (err) {
+        showBonusError(err.message);
+        btn.disabled = false;
+      }
+    }
+
+    // ── Main init ──────────────────────────────────────────────────────────
     async function init() {
       try {
         const [matchRes, predRes] = await Promise.all([
@@ -357,6 +520,7 @@
         predictions.forEach(p => { predMap[p.matchId || p.match?.id] = p; });
 
         renderList();
+        loadBonusSection();
       } catch (err) {
         document.getElementById('match-list').innerHTML = `
           <div class="text-center py-12">
