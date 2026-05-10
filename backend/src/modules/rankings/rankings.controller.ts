@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { RankingsService } from './rankings.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -16,5 +16,10 @@ export class RankingsController {
   @Get('me')
   myRank(@CurrentUser() user: { id: string }) {
     return this.rankingsService.getUserRank(user.id);
+  }
+
+  @Get(':userId/predictions')
+  userPredictions(@Param('userId') userId: string) {
+    return this.rankingsService.getUserPredictions(userId);
   }
 }

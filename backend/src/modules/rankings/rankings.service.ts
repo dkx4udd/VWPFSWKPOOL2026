@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Prediction } from '../../infrastructure/database/entities/prediction.entity';
 import { BonusPrediction } from '../../infrastructure/database/entities/bonus-prediction.entity';
 import { User } from '../../infrastructure/database/entities/user.entity';
@@ -37,20 +37,16 @@ export class RankingsService {
     );
     const matchMap = new Map(matchRows.map(r => [r.userId, r]));
 
-    const allUserIds = [...new Set([...matchMap.keys(), ...bonusMap.keys()])];
-    if (!allUserIds.length) return [];
+    const allUsers = await this.userRepo.find();
 
-    const users = await this.userRepo.find({ where: { id: In(allUserIds) } });
-    const userMap = new Map(users.map(u => [u.id, u]));
-
-    const combined = allUserIds.map(userId => {
-      const row = matchMap.get(userId);
+    const combined = allUsers.map(user => {
+      const row = matchMap.get(user.id);
       const matchPts = parseInt(row?.matchPoints ?? '0', 10);
-      const bonusPts = bonusMap.get(userId) ?? 0;
+      const bonusPts = bonusMap.get(user.id) ?? 0;
       return {
-        userId,
-        firstName: userMap.get(userId)?.firstName ?? '',
-        lastName: userMap.get(userId)?.lastName ?? '',
+        userId: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         matchPoints: matchPts,
         bonusPoints: bonusPts,
         totalPoints: matchPts + bonusPts,
@@ -59,12 +55,49 @@ export class RankingsService {
       };
     });
 
-    combined.sort((a, b) => b.totalPoints - a.totalPoints || b.exactCount - a.exactCount);
+    combined.sort((a, b) => {
+      if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+      if (b.exactCount !== a.exactCount) return b.exactCount - a.exactCount;
+      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
+    });
+
     return combined.map((entry, idx) => ({ position: idx + 1, ...entry }));
   }
 
   async getUserRank(userId: string) {
     const board = await this.getLeaderboard();
     return board.find(r => r.userId === userId) ?? null;
+  }
+
+  async getUserPredictions(userId: string) {
+    const preds = await this.predRepo.find({
+      where: { userId },
+      relations: ['match', 'match.homeTeam', 'match.awayTeam'],
+      order: { match: { scheduledAt: 'ASC' } } as any,
+    });
+
+    return preds.map(p => ({
+      matchId: p.matchId,
+      homeScore: p.homeScore,
+      awayScore: p.awayScore,
+      points: p.points,
+      isRevised: p.isRevised,
+      match: {
+        scheduledAt: p.match.scheduledAt,
+        phase: p.match.phase,
+        group: p.match.group,
+        status: p.match.status,
+        homeScore: p.match.homeScore,
+        awayScore: p.match.awayScore,
+        homeTeam: p.match.homeTeam
+          ? { name: p.match.homeTeam.nameNl, flagEmoji: p.match.homeTeam.flagEmoji }
+          : null,
+        awayTeam: p.match.awayTeam
+          ? { name: p.match.awayTeam.nameNl, flagEmoji: p.match.awayTeam.flagEmoji }
+          : null,
+        homeTeamPlaceholder: p.match.homeTeamPlaceholder,
+        awayTeamPlaceholder: p.match.awayTeamPlaceholder,
+      },
+    }));
   }
 }
