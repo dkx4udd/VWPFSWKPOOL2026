@@ -124,6 +124,8 @@
 
     const openDropdowns = new Set();
     const loadedDropdowns = new Map();
+    let cachedPlayers = null;
+    let cachedNoPoints = false;
     let lang = localStorage.getItem('wk_lang') || 'nl';
     document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
 
@@ -132,7 +134,9 @@
       localStorage.setItem('wk_lang', lang);
       document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
       document.querySelectorAll('[data-nl]').forEach(el => { el.textContent = el.dataset[lang] || el.dataset.nl; });
-      // Re-render open dropdowns with new language
+      // Re-render full ranking from cache (no API call)
+      if (cachedPlayers) renderRankingHtml(cachedPlayers, cachedNoPoints);
+      // Re-render any open dropdowns
       for (const userId of openDropdowns) {
         const content = document.getElementById(`dc-${userId}`);
         if (content && loadedDropdowns.has(userId)) {
@@ -161,8 +165,8 @@
     }
 
     const T = {
-      nl: { pred: 'voorsp.', result: 'uitslag', noScores: 'Scores zijn zichtbaar na verwerking van de eerste wedstrijd', loading: 'Laden…', loadFail: 'Laden mislukt', podium: 'Podium', fullRanking: 'Volledige Ranglijst', alphabetical: 'Deelnemers — Alfabetisch', yourPos: 'Jouw positie', show: 'Toon ↓', points: 'punten', waiting: 'Wachten op eerste wedstrijd…', settled: 'gesettled', exact: 'exact', bonus: 'bonus', group: g => `Groep ${g}`, wkStart: 'WK 2026 begint op 11 juni', wkStartSub: 'Punten worden berekend na afloop van elke wedstrijd. Klik op een speler om zijn voorspellingen te bekijken.', cantLoad: 'Kon voorspellingen niet laden', errorLoad: 'Fout bij laden:' },
-      en: { pred: 'pred.', result: 'result', noScores: 'Scores visible after first match is settled', loading: 'Loading…', loadFail: 'Failed to load', podium: 'Podium', fullRanking: 'Full Leaderboard', alphabetical: 'Participants — Alphabetical', yourPos: 'Your position', show: 'Show ↓', points: 'points', waiting: 'Waiting for first match…', settled: 'settled', exact: 'exact', bonus: 'bonus', group: g => `Group ${g}`, wkStart: 'World Cup 2026 starts June 11', wkStartSub: 'Points are calculated after each match. Click a player to view their predictions.', cantLoad: 'Could not load predictions', errorLoad: 'Error loading:' },
+      nl: { pred: 'voorsp.', result: 'uitslag', noScores: 'Scores zijn zichtbaar na verwerking van de eerste wedstrijd', loading: 'Laden…', loadFail: 'Laden mislukt', podium: 'Podium', fullRanking: 'Volledige Ranglijst', alphabetical: 'Deelnemers — Alfabetisch', yourPos: 'Jouw positie', show: 'Toon ↓', points: 'punten', waiting: 'Wachten op eerste wedstrijd…', settled: 'gesettled', exact: 'exact', bonus: 'bonus', me: '(jij)', group: g => `Groep ${g}`, wkStart: 'WK 2026 begint op 11 juni', wkStartSub: 'Punten worden berekend na afloop van elke wedstrijd. Klik op een speler om zijn voorspellingen te bekijken.', cantLoad: 'Kon voorspellingen niet laden', errorLoad: 'Fout bij laden:' },
+      en: { pred: 'pred.', result: 'result', noScores: 'Scores visible after first match is settled', loading: 'Loading…', loadFail: 'Failed to load', podium: 'Podium', fullRanking: 'Full Leaderboard', alphabetical: 'Participants — Alphabetical', yourPos: 'Your position', show: 'Show ↓', points: 'points', waiting: 'Waiting for first match…', settled: 'settled', exact: 'exact', bonus: 'bonus', me: '(you)', group: g => `Group ${g}`, wkStart: 'World Cup 2026 starts June 11', wkStartSub: 'Points are calculated after each match. Click a player to view their predictions.', cantLoad: 'Could not load predictions', errorLoad: 'Error loading:' },
     };
 
     const PHASE_LABELS = {
@@ -351,7 +355,7 @@
                 ${initials(p.firstName, p.lastName)}
               </div>
               <div class="flex-1 min-w-0">
-                <div class="font-semibold text-sm text-on-surface truncate">${p.firstName} ${p.lastName}${isMe ? ' <span class="text-primary text-[10px] font-bold">(jij)</span>' : ''}</div>
+                <div class="font-semibold text-sm text-on-surface truncate">${p.firstName} ${p.lastName}${isMe ? ` <span class="text-primary text-[10px] font-bold">${T[lang].me}</span>` : ''}</div>
                 <div class="text-xs text-on-surface-variant">
                   ${noPointsYet
                     ? T[lang].waiting
@@ -389,6 +393,41 @@
         </div>`;
     }
 
+    function renderRankingHtml(players, noPointsYet) {
+      let html = '';
+      const myEntry = players.find(p => p.userId === myUserId);
+      if (!noPointsYet && myEntry && myEntry.position > 3) {
+        html += `
+          <div class="flex items-center justify-between bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 mb-4">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined ms-filled text-primary" style="font-size:20px">person</span>
+              <span class="text-sm font-semibold text-on-surface">${T[lang].yourPos}</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold text-on-surface">#${myEntry.position}</span>
+              <span class="text-lg font-black text-primary">${myEntry.totalPoints}pts</span>
+              <button onclick="document.getElementById('row-${myEntry.userId}').scrollIntoView({behavior:'smooth',block:'center'})"
+                class="text-xs font-semibold text-primary hover:underline">${T[lang].show}</button>
+            </div>
+          </div>`;
+      }
+      if (!noPointsYet && players.length >= 3) {
+        html += renderPodium(players.slice(0, 3));
+      }
+      if (noPointsYet) {
+        html += `
+          <div class="bg-surface-container-lowest rounded-2xl px-4 py-4 mb-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)] flex items-start gap-3">
+            <span class="material-symbols-outlined ms-filled text-primary mt-0.5" style="font-size:22px">sports_soccer</span>
+            <div>
+              <div class="text-sm font-bold text-on-surface">${T[lang].wkStart}</div>
+              <div class="text-xs text-on-surface-variant mt-0.5">${T[lang].wkStartSub}</div>
+            </div>
+          </div>`;
+      }
+      html += renderTable(players, noPointsYet);
+      document.getElementById('ranking-content').innerHTML = html;
+    }
+
     async function loadRanking() {
       document.getElementById('ranking-content').innerHTML = `
         <div class="space-y-3 animate-pulse">
@@ -405,49 +444,15 @@
         if (!res.ok) throw new Error(T[lang].loadFail);
         const players = await res.json();
         const noPointsYet = players.length === 0 || players.every(p => p.totalPoints === 0);
-
-        let html = '';
-
-        const myEntry = players.find(p => p.userId === myUserId);
-        if (!noPointsYet && myEntry && myEntry.position > 3) {
-          html += `
-            <div class="flex items-center justify-between bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 mb-4">
-              <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined ms-filled text-primary" style="font-size:20px">person</span>
-                <span class="text-sm font-semibold text-on-surface">${T[lang].yourPos}</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-sm font-bold text-on-surface">#${myEntry.position}</span>
-                <span class="text-lg font-black text-primary">${myEntry.totalPoints}pts</span>
-                <button onclick="document.getElementById('row-${myEntry.userId}').scrollIntoView({behavior:'smooth',block:'center'})"
-                  class="text-xs font-semibold text-primary hover:underline">${T[lang].show}</button>
-              </div>
-            </div>`;
-        }
-
-        if (!noPointsYet && players.length >= 3) {
-          html += renderPodium(players.slice(0, 3));
-        }
-
-        if (noPointsYet) {
-          html += `
-            <div class="bg-surface-container-lowest rounded-2xl px-4 py-4 mb-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)] flex items-start gap-3">
-              <span class="material-symbols-outlined ms-filled text-primary mt-0.5" style="font-size:22px">sports_soccer</span>
-              <div>
-                <div class="text-sm font-bold text-on-surface">${T[lang].wkStart}</div>
-                <div class="text-xs text-on-surface-variant mt-0.5">Punten worden berekend na afloop van elke wedstrijd. ${T[lang].wkStartSub}</div>
-              </div>
-            </div>`;
-        }
-
-        html += renderTable(players, noPointsYet);
-        document.getElementById('ranking-content').innerHTML = html;
+        cachedPlayers = players;
+        cachedNoPoints = noPointsYet;
+        renderRankingHtml(players, noPointsYet);
       } catch (err) {
         document.getElementById('ranking-content').innerHTML = `
           <div class="text-center py-12">
             <span class="material-symbols-outlined text-error" style="font-size:40px">error</span>
             <p class="text-on-surface-variant mt-2">${T[lang].errorLoad} ${err.message}</p>
-            <button onclick="loadRanking()" class="mt-4 text-primary font-semibold text-sm">Opnieuw proberen</button>
+            <button onclick="loadRanking()" class="mt-4 text-primary font-semibold text-sm">${lang === 'nl' ? 'Opnieuw proberen' : 'Try again'}</button>
           </div>`;
       }
     }
