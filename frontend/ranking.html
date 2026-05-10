@@ -64,9 +64,12 @@
         <div class="text-base font-black text-on-surface leading-none">Ranglijst</div>
       </div>
     </div>
-    <button onclick="loadRanking()" class="flex items-center gap-1 text-xs font-semibold text-primary px-3 py-2 rounded-xl hover:bg-surface-container transition-colors">
-      <span class="material-symbols-outlined" style="font-size:18px">refresh</span>
-    </button>
+    <div class="flex items-center gap-2">
+      <button id="langBtn" onclick="toggleLang()" class="text-[11px] font-semibold border border-outline-variant px-2.5 py-1 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">EN</button>
+      <button onclick="loadRanking()" class="flex items-center gap-1 text-xs font-semibold text-primary px-3 py-2 rounded-xl hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:18px">refresh</span>
+      </button>
+    </div>
   </header>
 
   <!-- Main -->
@@ -121,6 +124,19 @@
 
     const openDropdowns = new Set();
     const loadedDropdowns = new Map();
+    let lang = 'nl';
+
+    function toggleLang() {
+      lang = lang === 'nl' ? 'en' : 'nl';
+      document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+      // Re-render open dropdowns with new language
+      for (const userId of openDropdowns) {
+        const content = document.getElementById(`dc-${userId}`);
+        if (content && loadedDropdowns.has(userId)) {
+          content.innerHTML = renderDropdownContent(loadedDropdowns.get(userId));
+        }
+      }
+    }
 
     async function apiFetch(path, opts = {}) {
       const token = localStorage.getItem('wk_token');
@@ -164,10 +180,16 @@
       return `<span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold ${cfg}">${points}pt</span>`;
     }
 
+    function teamLabel(team, placeholder) {
+      if (!team) return placeholder || '?';
+      const name = lang === 'nl' ? (team.nameNl || team.nameEn) : (team.nameEn || team.nameNl);
+      return `${team.flagEmoji} ${name}`;
+    }
+
     function predRow(p) {
       const m = p.match;
-      const homeLabel = m.homeTeam ? `${m.homeTeam.flagEmoji} ${m.homeTeam.name}` : (m.homeTeamPlaceholder || '?');
-      const awayLabel = m.awayTeam ? `${m.awayTeam.flagEmoji} ${m.awayTeam.name}` : (m.awayTeamPlaceholder || '?');
+      const homeLabel = teamLabel(m.homeTeam, m.homeTeamPlaceholder);
+      const awayLabel = teamLabel(m.awayTeam, m.awayTeamPlaceholder);
       const actual = (m.homeScore !== null && m.homeScore !== undefined) ? `${m.homeScore}–${m.awayScore}` : null;
       const revised = p.isRevised ? `<span class="text-[9px] text-amber-600 font-semibold ml-0.5">½</span>` : '';
       return `

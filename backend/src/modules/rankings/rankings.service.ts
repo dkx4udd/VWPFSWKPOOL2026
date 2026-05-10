@@ -90,10 +90,10 @@ export class RankingsService {
         homeScore: p.match.homeScore,
         awayScore: p.match.awayScore,
         homeTeam: p.match.homeTeam
-          ? { name: p.match.homeTeam.nameNl, flagEmoji: p.match.homeTeam.flagEmoji }
+          ? { nameNl: p.match.homeTeam.nameNl, nameEn: p.match.homeTeam.nameEn, flagEmoji: p.match.homeTeam.flagEmoji }
           : null,
         awayTeam: p.match.awayTeam
-          ? { name: p.match.awayTeam.nameNl, flagEmoji: p.match.awayTeam.flagEmoji }
+          ? { nameNl: p.match.awayTeam.nameNl, nameEn: p.match.awayTeam.nameEn, flagEmoji: p.match.awayTeam.flagEmoji }
           : null,
         homeTeamPlaceholder: p.match.homeTeamPlaceholder,
         awayTeamPlaceholder: p.match.awayTeamPlaceholder,

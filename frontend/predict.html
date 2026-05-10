@@ -68,7 +68,10 @@
         <div class="text-base font-black text-on-surface leading-none">WK Pool 2026</div>
       </div>
     </div>
-    <div id="progress-badge" class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-full"></div>
+    <div class="flex items-center gap-2">
+      <div id="progress-badge" class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-full"></div>
+      <button id="langBtn" onclick="toggleLang()" class="text-[11px] font-semibold border border-outline-variant px-2.5 py-1 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">EN</button>
+    </div>
   </header>
 
   <!-- Filter pills (sticky below header) -->
@@ -174,7 +177,7 @@
 
     if (!localStorage.getItem('wk_token')) window.location.href = 'login.html';
 
-    let allMatches = [], predMap = {}, statsMap = {}, aiMap = {}, boosterMap = {}, currentFilter = 'all', resolvedTeams = {}, autoSaveTimers = {};
+    let allMatches = [], predMap = {}, statsMap = {}, aiMap = {}, boosterMap = {}, currentFilter = 'all', resolvedTeams = {}, autoSaveTimers = {}, lang = 'nl';
 
     async function apiFetch(path, opts = {}) {
       const token = localStorage.getItem('wk_token');
@@ -188,10 +191,19 @@
 
     function teamName(match, side) {
       const team = match[`${side}Team`];
-      if (team) return team.nameNl || team.nameEn;
+      if (team) return lang === 'nl' ? (team.nameNl || team.nameEn) : (team.nameEn || team.nameNl);
       const ph = match[`${side}TeamPlaceholder`];
-      if (ph && resolvedTeams[ph]) return resolvedTeams[ph].team.nameNl || resolvedTeams[ph].team.nameEn;
+      if (ph && resolvedTeams[ph]) {
+        const t = resolvedTeams[ph].team;
+        return lang === 'nl' ? (t.nameNl || t.nameEn) : (t.nameEn || t.nameNl);
+      }
       return ph || '?';
+    }
+
+    function toggleLang() {
+      lang = lang === 'nl' ? 'en' : 'nl';
+      document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+      renderList();
     }
 
     function flagUrl(match, side) {
@@ -261,7 +273,7 @@
           if (!nameEl || !flagEl) continue;
           const resolved = resolvedTeams[ph];
           if (resolved) {
-            const name = resolved.team.nameNl || resolved.team.nameEn;
+            const name = lang === 'nl' ? (resolved.team.nameNl || resolved.team.nameEn) : (resolved.team.nameEn || resolved.team.nameNl);
             const iso = resolved.team.isoCode?.toLowerCase();
             nameEl.textContent = name;
             nameEl.classList.add('text-primary');
