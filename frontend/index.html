@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WK Pool 2026</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+    .ms-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+    .host-city-pattern {
+      background-image: radial-gradient(circle at 2px 2px, rgba(110, 36, 246, 0.05) 1px, transparent 0);
+      background-size: 16px 16px;
+    }
+    .btn-gradient { background: linear-gradient(135deg, #6200eb, #4700b0); }
+    .btn-gradient:hover { background: linear-gradient(135deg, #5400cc, #3d0094); }
+    .prize-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .prize-silver { background: linear-gradient(135deg, #9ca3af, #6b7280); }
+    .prize-bronze { background: linear-gradient(135deg, #c2773a, #a05a28); }
+    .nav-active .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48; color: #4700b0; }
+    .nav-active span:last-child { color: #4700b0; font-weight: 700; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-lowest": "#ffffff",
+            "secondary-container": "#5ce9fe",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#f3f3f4",
+            "on-surface-variant": "#494456",
+            "background": "#f9f9f9",
+            "primary": "#4700b0",
+            "outline-variant": "#cbc3d9",
+            "primary-container": "#6200eb",
+            "secondary": "#006874",
+            "surface-container": "#eeeeee",
+            "on-surface": "#1a1c1c",
+            "surface-container-high": "#e8e8e8",
+            "surface": "#f9f9f9",
+            "outline": "#7b7488",
+            "surface-container-highest": "#e2e2e2",
+            "secondary-fixed-dim": "#45d8ed",
+            "on-secondary-fixed": "#001f24",
+          },
+          spacing: {
+            sm: "12px", md: "24px", lg: "48px", xs: "4px",
+            "margin-mobile": "16px", xl: "80px", base: "8px"
+          },
+          fontFamily: { sans: ["Lexend", "sans-serif"] },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-sans min-h-screen host-city-pattern">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center px-4 h-16 w-full z-50 bg-surface-container-lowest border-b border-outline-variant sticky top-0">
+    <div class="flex items-center gap-2">
+      <div class="bg-primary p-2 rounded-lg text-white">
+        <span class="material-symbols-outlined ms-filled" style="font-size:22px">sports_soccer</span>
+      </div>
+      <div class="flex flex-col -space-y-0.5">
+        <span class="text-[9px] font-bold tracking-[0.2em] text-primary uppercase">FIFA World Cup</span>
+        <span class="text-lg font-black text-on-surface tracking-tight leading-none">2026™</span>
+      </div>
+    </div>
+    <div class="flex gap-2" id="header-actions">
+      <!-- Filled by JS -->
+    </div>
+  </header>
+
+  <!-- Main content: switches between landing/onboarding/dashboard -->
+  <main id="main-content" class="min-h-[calc(100vh-64px)]">
+    <!-- Loading skeleton -->
+    <div id="view-loading" class="px-4 pt-8 max-w-2xl mx-auto space-y-4">
+      <div class="h-8 bg-surface-container-highest rounded-xl w-2/3 animate-pulse"></div>
+      <div class="h-32 bg-surface-container-highest rounded-2xl animate-pulse"></div>
+      <div class="h-48 bg-surface-container-highest rounded-2xl animate-pulse"></div>
+    </div>
+    <!-- Views injected by JS -->
+  </main>
+
+  <!-- Bottom Nav (only logged in) -->
+  <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant z-50 pb-safe">
+    <div class="flex justify-around items-center h-16 max-w-2xl mx-auto">
+      <a href="index.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl nav-active">
+        <span class="material-symbols-outlined" style="font-size:24px">home</span>
+        <span class="text-[11px] font-medium">Home</span>
+      </a>
+      <a href="predict.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:24px">sports_soccer</span>
+        <span class="text-[11px] font-medium">Voorspellen</span>
+      </a>
+      <a href="ranking.html" class="flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined" style="font-size:24px">leaderboard</span>
+        <span class="text-[11px] font-medium">Ranglijst</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3003/api/v1'
+      : `${window.location.protocol}//${window.location.host}/api/v1`;
+
+    const PHASE_LABELS = {
+      group: 'Groepsfase', round_of_32: 'Ronde van 32', round_of_16: 'Achtste finales',
+      quarter_final: 'Kwartfinales', semi_final: 'Halve finales',
+      third_place: 'Troostfinale', final: 'Finale'
+    };
+
+    const TOTAL_MATCHES = 104;
+
+    async function apiFetch(path, opts = {}) {
+      const token = localStorage.getItem('wk_token');
+      const res = await fetch(API_BASE + path, {
+        ...opts,
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(opts.headers || {}) },
+      });
+      if (res.status === 401) { clearAuth(); window.location.href = 'login.html'; }
+      return res;
+    }
+
+    function clearAuth() {
+      ['wk_token', 'wk_refresh_token', 'wk_user'].forEach(k => localStorage.removeItem(k));
+    }
+
+    function teamName(match, side) {
+      const team = match[`${side}Team`];
+      if (team) return team.nameNl || team.nameEn;
+      return match[`${side}TeamPlaceholder`] || '?';
+    }
+
+    function flagUrl(match, side) {
+      const team = match[`${side}Team`];
+      if (team?.isoCode) return `https://flagcdn.com/w40/${team.isoCode.toLowerCase()}.png`;
+      return null;
+    }
+
+    function teamAvatar(match, side) {
+      const url = flagUrl(match, side);
+      const name = teamName(match, side);
+      if (url) return `<img src="${url}" alt="${name}" class="w-10 h-8 object-cover rounded" onerror="this.style.display='none'">`;
+      return `<span class="material-symbols-outlined text-outline" style="font-size:32px">flag</span>`;
+    }
+
+    function formatDate(dt) {
+      return new Date(dt).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    }
+
+    // ── Landing view (not logged in) ──────────────────────────────────────
+    function renderLanding() {
+      document.getElementById('header-actions').innerHTML = `
+        <a href="login.html" class="text-sm font-semibold text-primary px-4 py-2 rounded-xl hover:bg-surface-container-low transition-colors">Inloggen</a>
+      `;
+      document.getElementById('main-content').innerHTML = `
+        <!-- Hero -->
+        <div class="px-4 pt-12 pb-8 max-w-2xl mx-auto text-center">
+          <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+            <span class="material-symbols-outlined ms-filled" style="font-size:16px">sports_soccer</span>
+            11 juni – 19 juli 2026
+          </div>
+          <h2 class="text-4xl font-black text-on-surface tracking-tight leading-tight mb-4">
+            Voorspel elke wedstrijd.<br><span class="text-primary">Win de pool.</span>
+          </h2>
+          <p class="text-on-surface-variant text-lg mb-8">
+            Doe mee met de VWPFS WK 2026 Pool. Voorspel alle 104 wedstrijden, scoor punten en klim in de ranglijst.
+          </p>
+          <a href="login.html" class="inline-flex items-center gap-2 btn-gradient text-white font-bold px-8 py-4 rounded-2xl shadow-[0_4px_16px_rgba(71,0,176,0.35)] hover:shadow-[0_6px_20px_rgba(71,0,176,0.45)] transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined ms-filled" style="font-size:20px">rocket_launch</span>
+            Doe mee — gratis
+          </a>
+          <p class="text-sm text-on-surface-variant mt-3">Al een account? <a href="login.html" class="text-primary font-semibold hover:underline">Inloggen</a></p>
+        </div>
+
+        <!-- Punten systeem -->
+        <div class="px-4 max-w-2xl mx-auto mb-8">
+          <h3 class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4">Hoe werkt het?</h3>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-surface-container-lowest rounded-2xl p-4 text-center shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-3xl font-black text-primary mb-1">3</div>
+              <div class="text-xs font-semibold text-on-surface">Exact goed</div>
+              <div class="text-xs text-on-surface-variant mt-1">Juiste uitslag</div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-2xl p-4 text-center shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-3xl font-black text-secondary mb-1">1</div>
+              <div class="text-xs font-semibold text-on-surface">Winnaar goed</div>
+              <div class="text-xs text-on-surface-variant mt-1">Juiste winnaar</div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-2xl p-4 text-center shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-3xl font-black text-outline mb-1">0</div>
+              <div class="text-xs font-semibold text-on-surface">Fout</div>
+              <div class="text-xs text-on-surface-variant mt-1">Beide fout</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prijzen -->
+        <div class="px-4 max-w-2xl mx-auto mb-16">
+          <h3 class="text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4">Prijzenpodium</h3>
+          <div class="space-y-3">
+            <div class="flex items-center gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="prize-gold w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md flex-shrink-0">1</div>
+              <div>
+                <div class="font-bold text-on-surface">Winnaar</div>
+                <div class="text-sm text-on-surface-variant">Eeuwige roem + beker</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="prize-silver w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md flex-shrink-0">2</div>
+              <div>
+                <div class="font-bold text-on-surface">Runner-up</div>
+                <div class="text-sm text-on-surface-variant">Tweede prijs</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="prize-bronze w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md flex-shrink-0">3</div>
+              <div>
+                <div class="font-bold text-on-surface">Derde prijs</div>
+                <div class="text-sm text-on-surface-variant">Derde prijs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ── Onboarding view (logged in, no predictions) ────────────────────────
+    function renderOnboarding(user) {
+      document.getElementById('main-content').innerHTML = `
+        <div class="px-4 pt-10 pb-24 max-w-2xl mx-auto text-center">
+          <div class="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined ms-filled text-primary" style="font-size:40px">sports_soccer</span>
+          </div>
+          <h2 class="text-3xl font-black text-on-surface mb-2">Welkom, ${user.firstName || 'speler'}!</h2>
+          <p class="text-on-surface-variant text-lg mb-8">
+            Je bent ingeschreven. Nu is het tijd om je voorspellingen in te vullen voor alle 104 WK-wedstrijden.
+          </p>
+          <a href="predict.html" class="inline-flex items-center gap-2 btn-gradient text-white font-bold px-8 py-4 rounded-2xl shadow-[0_4px_16px_rgba(71,0,176,0.35)] transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined ms-filled" style="font-size:20px">edit_note</span>
+            Begin met voorspellen
+          </a>
+          <div class="mt-10 grid grid-cols-3 gap-3 text-left">
+            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-2xl font-black text-primary">104</div>
+              <div class="text-xs text-on-surface-variant font-medium mt-1">Wedstrijden</div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-2xl font-black text-primary">3pts</div>
+              <div class="text-xs text-on-surface-variant font-medium mt-1">Per exacte uitslag</div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-2xl font-black text-primary">11 jun</div>
+              <div class="text-xs text-on-surface-variant font-medium mt-1">Aftrap!</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ── Dashboard view (logged in, has predictions) ────────────────────────
+    function renderDashboard(user, predictions, myRank, todayMatches) {
+      const done = predictions.length;
+      const pct = Math.round((done / TOTAL_MATCHES) * 100);
+      const points = myRank ? myRank.totalPoints : 0;
+      const position = myRank ? myRank.position : '—';
+      const settled = myRank ? myRank.settledCount : 0;
+
+      // Build today's matches HTML
+      let todayHtml = '';
+      if (todayMatches && todayMatches.length > 0) {
+        const predMap = {};
+        predictions.forEach(p => { predMap[p.matchId || p.match?.id] = p; });
+        todayHtml = todayMatches.map(m => {
+          const pred = predMap[m.id];
+          const homeName = teamName(m, 'home');
+          const awayName = teamName(m, 'away');
+          const homeFlag = flagUrl(m, 'home');
+          const awayFlag = flagUrl(m, 'away');
+          const homeImg = homeFlag ? `<img src="${homeFlag}" class="w-8 h-6 object-cover rounded" onerror="this.style.display='none'">` : '';
+          const awayImg = awayFlag ? `<img src="${awayFlag}" class="w-8 h-6 object-cover rounded" onerror="this.style.display='none'">` : '';
+          const predHtml = pred
+            ? `<span class="text-xs font-bold text-secondary-fixed bg-secondary/10 px-2 py-0.5 rounded-full">${pred.homeScore}–${pred.awayScore}</span>`
+            : `<span class="text-xs text-on-surface-variant">Niet voorspeld</span>`;
+          return `
+            <div class="flex items-center gap-3 py-3">
+              <div class="flex-1 flex items-center justify-end gap-2 text-sm font-semibold">${homeImg}<span>${homeName}</span></div>
+              <div class="flex flex-col items-center gap-1 min-w-[60px]">
+                ${m.homeScore !== null ? `<span class="text-lg font-black text-on-surface">${m.homeScore}–${m.awayScore}</span>` : predHtml}
+                <span class="text-[10px] text-on-surface-variant">${new Date(m.scheduledAt).toLocaleTimeString('nl-NL', {hour:'2-digit',minute:'2-digit'})}</span>
+              </div>
+              <div class="flex-1 flex items-center gap-2 text-sm font-semibold">${awayImg}<span>${awayName}</span></div>
+            </div>`;
+        }).join('');
+      }
+
+      document.getElementById('main-content').innerHTML = `
+        <div class="px-4 pt-6 pb-24 max-w-2xl mx-auto space-y-4">
+
+          <!-- Stats row -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-2xl font-black text-primary leading-none">${position}</div>
+              <div class="text-xs text-on-surface-variant font-medium mt-1">Positie</div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-2xl font-black text-primary leading-none">${points}</div>
+              <div class="text-xs text-on-surface-variant font-medium mt-1">Punten</div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+              <div class="text-2xl font-black text-primary leading-none">${settled}</div>
+              <div class="text-xs text-on-surface-variant font-medium mt-1">Gescoord</div>
+            </div>
+          </div>
+
+          <!-- Predictions progress -->
+          <div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_2px_8px_rgba(71,0,176,0.06)]">
+            <div class="flex justify-between items-end mb-3">
+              <div>
+                <div class="text-xs font-bold tracking-widest text-primary uppercase">Voortgang</div>
+                <div class="text-lg font-bold text-on-surface mt-0.5">Jouw voorspellingen</div>
+              </div>
+              <span class="text-2xl font-black text-primary">${done}<span class="text-outline font-normal text-lg">/${TOTAL_MATCHES}</span></span>
+            </div>
+            <div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+              <div class="h-full bg-primary rounded-full transition-all duration-1000" style="width:${pct}%"></div>
+            </div>
+            <div class="flex justify-between mt-2">
+              <span class="text-xs text-on-surface-variant">${pct}% compleet</span>
+              <a href="predict.html" class="text-xs font-semibold text-primary hover:underline">Aanvullen →</a>
+            </div>
+          </div>
+
+          <!-- Today's matches -->
+          ${todayMatches && todayMatches.length > 0 ? `
+          <div class="bg-surface-container-lowest rounded-2xl shadow-[0_2px_8px_rgba(71,0,176,0.06)] overflow-hidden">
+            <div class="px-5 py-4 border-b border-outline-variant flex items-center justify-between">
+              <div class="text-xs font-bold tracking-widest text-primary uppercase flex items-center gap-2">
+                <span class="material-symbols-outlined ms-filled" style="font-size:16px">today</span>Vandaag
+              </div>
+              <a href="predict.html" class="text-xs font-semibold text-primary hover:underline">Alle wedstrijden</a>
+            </div>
+            <div class="divide-y divide-outline-variant px-5">${todayHtml}</div>
+          </div>` : `
+          <div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_2px_8px_rgba(71,0,176,0.06)] text-center">
+            <span class="material-symbols-outlined text-outline" style="font-size:32px">calendar_today</span>
+            <p class="text-sm text-on-surface-variant mt-2">Geen wedstrijden vandaag</p>
+          </div>`}
+
+          <!-- Quick actions -->
+          <div class="grid grid-cols-2 gap-3">
+            <a href="predict.html" class="flex flex-col items-center gap-2 bg-primary text-white rounded-2xl p-5 shadow-[0_4px_12px_rgba(71,0,176,0.3)] active:scale-[0.98] transition-all">
+              <span class="material-symbols-outlined ms-filled" style="font-size:28px">edit_note</span>
+              <span class="text-sm font-bold">Voorspellen</span>
+            </a>
+            <a href="ranking.html" class="flex flex-col items-center gap-2 bg-surface-container-lowest text-on-surface rounded-2xl p-5 shadow-[0_2px_8px_rgba(71,0,176,0.06)] active:scale-[0.98] transition-all">
+              <span class="material-symbols-outlined ms-filled text-primary" style="font-size:28px">leaderboard</span>
+              <span class="text-sm font-bold">Ranglijst</span>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    // ── Bootstrap ─────────────────────────────────────────────────────────
+    async function init() {
+      const token = localStorage.getItem('wk_token');
+
+      if (!token) {
+        document.getElementById('view-loading').classList.add('hidden');
+        renderLanding();
+        return;
+      }
+
+      // Logged in — show bottom nav
+      document.getElementById('bottom-nav').classList.remove('hidden');
+      document.querySelector('#main-content').classList.add('pb-16');
+
+      // Set header actions
+      let userObj = null;
+      try { userObj = JSON.parse(localStorage.getItem('wk_user') || 'null'); } catch {}
+
+      document.getElementById('header-actions').innerHTML = `
+        <button onclick="logout()" class="flex items-center gap-1 text-sm text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-lg">
+          <span class="material-symbols-outlined" style="font-size:20px">logout</span>
+        </button>
+      `;
+
+      try {
+        // Fetch in parallel
+        const [predRes, rankRes, todayRes, meRes] = await Promise.all([
+          apiFetch('/predictions/my'),
+          apiFetch('/rankings/me'),
+          apiFetch('/matches/today'),
+          apiFetch('/auth/me'),
+        ]);
+
+        const predictions = predRes.ok ? await predRes.json() : [];
+        const myRank = rankRes.ok ? await rankRes.json() : null;
+        const todayMatches = todayRes.ok ? await todayRes.json() : [];
+        const me = meRes.ok ? await meRes.json() : userObj;
+
+        document.getElementById('view-loading').classList.add('hidden');
+
+        if (predictions.length === 0) {
+          renderOnboarding(me || {});
+        } else {
+          renderDashboard(me || {}, predictions, myRank, todayMatches);
+        }
+      } catch (err) {
+        document.getElementById('view-loading').classList.add('hidden');
+        renderOnboarding(userObj || {});
+      }
+    }
+
+    function logout() {
+      ['wk_token', 'wk_refresh_token', 'wk_user'].forEach(k => localStorage.removeItem(k));
+      window.location.href = 'login.html';
+    }
+
+    init();
+  </script>
+</body>
+</html>
